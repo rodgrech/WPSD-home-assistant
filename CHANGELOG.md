@@ -29,6 +29,8 @@
 - Redesigned the modern DMR radio example to more closely match the original
   handheld-style screen concept.
 - Increased the modern DMR radio example size for better readability.
+- Rethemed the modern DMR radio example toward a Motorola R7-style handheld
+  screen layout.
 
 ## 0.0.2 - 2026-05-22
 

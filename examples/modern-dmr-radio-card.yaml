@@ -1,4 +1,4 @@
-# Example modern DMR radio screen card for the DMR Hotspot integration.
+# Example modern DMR handheld-style Lovelace card for the DMR Hotspot integration.
 #
 # Required custom card:
 # https://github.com/custom-cards/button-card
@@ -9,13 +9,13 @@ show_name: false
 show_state: false
 show_icon: false
 grid_options:
-  columns: 6
-  rows: 4
+  columns: 5
+  rows: 5
 tap_action:
   action: more-info
 styles:
   card:
-    - width: 380px
+    - width: 300px
     - max-width: 100%
     - margin: 0 auto
     - padding: 0
@@ -41,98 +41,127 @@ custom_fields:
       const source = states['sensor.dmr_hotspot_source']?.state || '--';
       const loss = states['sensor.dmr_hotspot_loss']?.state || '0%';
       const duration = states['sensor.dmr_hotspot_duration']?.state;
-      const ber = states['sensor.dmr_hotspot_ber']?.state;
-      const berText = ber && ber !== 'unknown' && ber !== 'unavailable' ? `BER: ${ber}` : `LOSS: ${loss}`;
+      const name = states['sensor.dmr_hotspot_name']?.state;
+      const caller = name && name !== 'unknown' && name !== 'unavailable' ? `${callsign} - ${name}` : callsign;
       const durationText = duration && duration !== 'unknown' && duration !== 'unavailable' ? `${duration}s` : source;
 
       return `
         <style>
-          .dmr-screen {
-            width: 370px;
+          .r7-radio {
+            width: 284px;
             max-width: 100%;
-            height: 246px;
             margin: 0 auto;
-            overflow: hidden;
+            padding: 12px 14px 11px;
             box-sizing: border-box;
-            border: 8px solid #08090b;
-            border-radius: 9px;
-            background: #141414;
+            border-radius: 17px 17px 12px 12px;
+            background:
+              linear-gradient(90deg, #17191d 0 8px, transparent 8px calc(100% - 8px), #17191d calc(100% - 8px)),
+              linear-gradient(#363a3f, #15171a);
+            border: 2px solid #070809;
             box-shadow:
-              inset 0 0 0 1px rgba(255,255,255,.05),
-              0 4px 12px rgba(0,0,0,.45);
-            color: #f3f3f3;
+              inset 0 1px 0 rgba(255,255,255,.16),
+              inset 0 -5px 10px rgba(0,0,0,.38),
+              0 5px 14px rgba(0,0,0,.42);
+            color: #0b1823;
             font-family: Arial, Helvetica, sans-serif;
             letter-spacing: 0;
           }
 
-          .dmr-topbar {
-            height: 25px;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+          .r7-brand {
+            height: 18px;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 0 7px;
+            justify-content: center;
+            color: #d8dde2;
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+          }
+
+          .r7-screen-bezel {
+            padding: 6px;
+            border-radius: 7px;
+            background: #070809;
+            box-shadow: inset 0 0 0 1px #2d3236;
+          }
+
+          .r7-screen {
+            height: 205px;
+            overflow: hidden;
+            border-radius: 3px;
+            background: #d9e7ee;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);
+          }
+
+          .r7-status {
+            height: 24px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 5px;
+            padding: 0 6px;
             box-sizing: border-box;
-            background: #3677d8;
+            background: #2c79c7;
             color: #fff;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 800;
             line-height: 1;
           }
 
-          .dmr-date {
-            min-width: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          .dmr-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #39e35c;
-            box-shadow: 0 0 5px rgba(57,227,92,.7);
-          }
-
-          .dmr-status-icons {
+          .r7-icons {
             display: inline-flex;
             align-items: center;
-            justify-content: flex-end;
             gap: 5px;
-            min-width: 0;
           }
 
-          .dmr-body {
-            height: 180px;
+          .r7-main {
+            height: 146px;
             display: grid;
-            grid-template-rows: 36px 52px 31px 26px;
-            align-items: center;
-            justify-items: center;
-            padding: 20px 14px 12px;
+            grid-template-rows: 26px 68px 42px;
+            padding: 6px 7px;
             box-sizing: border-box;
-            background:
-              radial-gradient(circle at 50% 22%, rgba(255,255,255,.08), transparent 30%),
-              #171717;
+            row-gap: 5px;
           }
 
-          .dmr-talkgroup {
+          .r7-zone {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             min-width: 0;
-            max-width: 100%;
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: 900;
+            color: #172d3d;
+            font-size: 12px;
+            font-weight: 800;
             line-height: 1;
+          }
+
+          .r7-zone span {
+            min-width: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
 
-          .dmr-callsign {
+          .r7-channel {
+            padding: 8px 9px;
+            box-sizing: border-box;
+            background: #f7fbfe;
+            border: 1px solid #b7c9d5;
+            border-radius: 2px;
+          }
+
+          .r7-channel-label {
+            color: #6c7d87;
+            font-size: 10px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 5px;
+          }
+
+          .r7-callsign {
             min-width: 0;
-            max-width: 100%;
-            color: #e1e1e1;
-            font-size: 29px;
+            color: #092a45;
+            font-size: 24px;
             font-weight: 900;
             line-height: 1;
             text-transform: uppercase;
@@ -141,79 +170,143 @@ custom_fields:
             text-overflow: ellipsis;
           }
 
-          .dmr-meta {
+          .r7-message {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 8px;
+            box-sizing: border-box;
+            background: #eef7fb;
+            border: 1px solid #b7c9d5;
+            border-radius: 2px;
+            color: #16364d;
+          }
+
+          .r7-message-title {
             min-width: 0;
-            max-width: 100%;
-            color: #aeb0b4;
-            font-size: 16px;
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .r7-message-sub {
+            min-width: 0;
+            margin-top: 4px;
+            font-size: 10px;
             font-weight: 800;
             line-height: 1;
+            color: #5b6d79;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
 
-          .dmr-submeta {
-            min-width: 0;
-            max-width: 100%;
-            color: #c8c8c8;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+          .r7-message-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2c79c7;
+            box-shadow: 0 0 0 2px rgba(44,121,199,.18);
           }
 
-          .dmr-softkeys {
+          .r7-softkeys {
+            height: 29px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            height: 29px;
-            background: #3677d8;
+            background: #2c79c7;
             color: #fff;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: 900;
             line-height: 29px;
             text-align: center;
           }
 
-          .dmr-softkeys span + span {
-            border-left: 1px solid rgba(255,255,255,.36);
+          .r7-softkeys span + span {
+            border-left: 1px solid rgba(255,255,255,.35);
+          }
+
+          .r7-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr 1fr;
+            gap: 8px;
+            padding: 9px 24px 0;
+            box-sizing: border-box;
+          }
+
+          .r7-button {
+            height: 21px;
+            border-radius: 3px;
+            background: linear-gradient(#24272b, #0b0c0e);
+            border: 1px solid #050505;
+            color: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 900;
+            line-height: 1;
           }
 
           ha-icon {
-            --mdc-icon-size: 14px;
-            width: 14px;
-            height: 14px;
+            --mdc-icon-size: 13px;
+            width: 13px;
+            height: 13px;
             display: inline-flex;
-            flex: 0 0 14px;
+            flex: 0 0 13px;
             align-items: center;
             justify-content: center;
             line-height: 1;
           }
         </style>
 
-        <div class="dmr-screen">
-          <div class="dmr-topbar">
-            <span class="dmr-date">26/08/25</span>
-            <span class="dmr-dot"></span>
-            <span class="dmr-status-icons">
-              <ha-icon icon="mdi:wifi"></ha-icon>
-              <ha-icon icon="mdi:signal-cellular-3"></ha-icon>
-              <span>07:39 pm</span>
-            </span>
+        <div class="r7-radio">
+          <div class="r7-brand">WPSD DMR</div>
+          <div class="r7-screen-bezel">
+            <div class="r7-screen">
+              <div class="r7-status">
+                <span>${mode}</span>
+                <span class="r7-icons">
+                  <ha-icon icon="mdi:wifi"></ha-icon>
+                  <ha-icon icon="mdi:signal-cellular-3"></ha-icon>
+                  <ha-icon icon="mdi:battery-high"></ha-icon>
+                </span>
+              </div>
+
+              <div class="r7-main">
+                <div class="r7-zone">
+                  <span>${talkgroup}</span>
+                  <span>${source}</span>
+                </div>
+
+                <div class="r7-channel">
+                  <div class="r7-channel-label">Channel</div>
+                  <div class="r7-callsign">${callsign}</div>
+                </div>
+
+                <div class="r7-message">
+                  <div>
+                    <div class="r7-message-title">${caller}</div>
+                    <div class="r7-message-sub">${durationText} - loss ${loss}</div>
+                  </div>
+                  <span class="r7-message-dot"></span>
+                </div>
+              </div>
+
+              <div class="r7-softkeys">
+                <span>Zones</span>
+                <span>Contacts</span>
+              </div>
+            </div>
           </div>
 
-          <div class="dmr-body">
-            <div class="dmr-talkgroup">TG: ${talkgroup}</div>
-            <div class="dmr-callsign">${callsign}</div>
-            <div class="dmr-meta">${mode} - ${durationText}</div>
-            <div class="dmr-submeta">${berText}</div>
-          </div>
-
-          <div class="dmr-softkeys">
-            <span>Zones</span>
-            <span>Contacts</span>
+          <div class="r7-buttons">
+            <span class="r7-button">P1</span>
+            <span class="r7-button">OK</span>
+            <span class="r7-button">P2</span>
           </div>
         </div>
       `;
