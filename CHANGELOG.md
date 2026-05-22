@@ -22,6 +22,8 @@
 - Added explicit icon dimensions and section grid sizing options to the
   dashboard card examples.
 - Updated the MCS2000-style dashboard badge text to `MCS2000`.
+- Improved responsive scaling and narrow-card text spacing for the dashboard
+  card examples.
 
 ## 0.0.2 - 2026-05-22
 

@@ -38,8 +38,6 @@ custom_fields:
       const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
       const source = states['sensor.dmr_hotspot_source']?.state || '--';
       const lastHeard = states['sensor.dmr_hotspot_last_heard']?.state || 'No recent traffic';
-      const temp = states['sensor.dmr_hotspot_temperature']?.state;
-      const tempText = temp && temp !== 'unknown' && temp !== 'unavailable' ? `${temp} C` : '-- C';
       const isConnected = status.toLowerCase() === 'connected';
 
       return `
@@ -100,9 +98,25 @@ custom_fields:
             align-items: center;
             justify-content: space-between;
             min-width: 0;
-            font-size: 16px;
+            gap: 8px;
+            font-size: 15px;
             font-weight: 800;
             line-height: 1;
+          }
+
+          .dmr-modern-zone span {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .dmr-modern-zone span:first-child {
+            flex: 1 1 auto;
+          }
+
+          .dmr-modern-zone span:last-child {
+            flex: 0 0 auto;
           }
 
           .dmr-modern-callsign {
@@ -111,7 +125,7 @@ custom_fields:
             justify-content: center;
             min-width: 0;
             color: #052b4a;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 900;
             line-height: 1;
             text-transform: uppercase;
@@ -191,7 +205,7 @@ custom_fields:
             <div class="dmr-modern-body">
               <div class="dmr-modern-zone">
                 <span>${mode}</span>
-                <span>${source} ${tempText}</span>
+                <span>${source}</span>
               </div>
               <div class="dmr-modern-callsign">${callsign}</div>
               <div class="dmr-modern-talkgroup">${talkgroup}</div>
