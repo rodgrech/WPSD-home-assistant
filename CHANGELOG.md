@@ -6,6 +6,7 @@
   and `loss`.
 - Added source and loss sensors.
 - Updated dashboard examples to use the source sensor.
+- Added explicit fallback names for all sensors.
 
 ## 0.0.2 - 2026-05-22
 
