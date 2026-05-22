@@ -77,13 +77,25 @@ confirm the exact JSON shape returned by your hotspot.
 
 ## Release
 
-The first release is prepared as `v0.0.1`.
+Latest tagged release: `v0.0.3`
 
 The GitHub repository is:
 
 ```text
 https://github.com/rodgrech/WPSD-home-assistant
 ```
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for the full release history.
+
+Recent changes:
+
+- `0.0.3`: mapped real WPSD API fields, added source/loss sensors, and added
+  explicit fallback names for all sensors.
+- `0.0.2`: added branding assets, fixed sensor values showing as unknown, and
+  added entry count troubleshooting.
+- `0.0.1`: initial Home Assistant custom integration and dashboard examples.
 
 ## Dashboard Card
 
