@@ -36,6 +36,8 @@
   zone, channel, and caller lines plus an RF activity strip.
 - Updated the modern DMR radio example activity strip colours: red for RF/TX,
   yellow for Net/RX, and blue for standby.
+- Tuned the modern DMR radio example font sizing, screen height, and activity
+  strip alignment.
 - Updated the modern DMR radio example channel label to show the active
   talkgroup.
 
