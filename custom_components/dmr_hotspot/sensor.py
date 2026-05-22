@@ -71,6 +71,11 @@ SENSORS: tuple[DmrHotspotSensorDescription, ...] = (
         value_fn=lambda data: data.talkgroup,
     ),
     DmrHotspotSensorDescription(
+        key="source",
+        translation_key="source",
+        value_fn=lambda data: data.source,
+    ),
+    DmrHotspotSensorDescription(
         key="last_heard",
         translation_key="last_heard",
         value_fn=lambda data: data.last_heard,
@@ -84,6 +89,11 @@ SENSORS: tuple[DmrHotspotSensorDescription, ...] = (
         key="duration",
         translation_key="duration",
         value_fn=lambda data: data.duration,
+    ),
+    DmrHotspotSensorDescription(
+        key="loss",
+        translation_key="loss",
+        value_fn=lambda data: data.loss,
     ),
     DmrHotspotSensorDescription(
         key="ber",

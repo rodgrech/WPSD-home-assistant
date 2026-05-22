@@ -43,6 +43,9 @@
       "talkgroup": {
         "name": "Talkgroup"
       },
+      "source": {
+        "name": "Source"
+      },
       "last_heard": {
         "name": "Last heard"
       },
@@ -51,6 +54,9 @@
       },
       "duration": {
         "name": "Duration"
+      },
+      "loss": {
+        "name": "Loss"
       },
       "ber": {
         "name": "BER"

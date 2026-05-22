@@ -30,6 +30,7 @@ custom_fields:
       const talkgroup = states['sensor.dmr_hotspot_talkgroup']?.state || 'TG ---';
       const mode = states['sensor.dmr_hotspot_mode']?.state || 'DMR';
       const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
+      const source = states['sensor.dmr_hotspot_source']?.state || '--';
       const lastHeard = states['sensor.dmr_hotspot_last_heard']?.state || 'No recent traffic';
       const temp = states['sensor.dmr_hotspot_temperature']?.state;
       const tempText = temp && temp !== 'unknown' && temp !== 'unavailable' ? `${temp} C` : '-- C';
@@ -176,7 +177,7 @@ custom_fields:
             <div class="dmr-modern-body">
               <div class="dmr-modern-zone">
                 <span>${mode}</span>
-                <span>${tempText}</span>
+                <span>${source} ${tempText}</span>
               </div>
               <div class="dmr-modern-callsign">${callsign}</div>
               <div class="dmr-modern-talkgroup">${talkgroup}</div>

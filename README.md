@@ -5,7 +5,7 @@
 A custom Home Assistant integration for monitoring a DMR hotspot such as WPSD,
 Pi-Star, or an MMDVMHost-based gateway.
 
-Version: `0.0.2`
+Version: `0.0.3`
 
 ## Features
 
@@ -16,6 +16,9 @@ Version: `0.0.2`
 - Example MCS2000-style Lovelace card layout
 - Example modern DMR radio LCD Lovelace card layout
 - HACS-ready repository layout
+
+Supported WPSD last-heard fields include `time_utc`, `mode`, `callsign`,
+`name`, `country`, `target`, `src`, `duration`, and `loss`.
 
 ## Branding
 

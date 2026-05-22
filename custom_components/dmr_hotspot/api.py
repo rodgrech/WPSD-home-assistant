@@ -24,10 +24,12 @@ class DmrHotspotData:
     mode: str | None = None
     network: str | None = None
     talkgroup: str | None = None
+    source: str | None = None
     last_heard: str | None = None
     timestamp: str | None = None
     duration: str | None = None
     ber: float | None = None
+    loss: str | None = None
     temperature: float | None = None
     raw: Any | None = None
 
@@ -95,10 +97,14 @@ class DmrHotspotClient:
                 "target",
                 "target_id",
             ),
+            source=_first_str(latest, "src", "source", "source_call"),
             last_heard=_format_last_heard(latest),
-            timestamp=_first_str(latest, "time", "timestamp", "datetime", "date"),
+            timestamp=_first_str(
+                latest, "time_utc", "time", "timestamp", "datetime", "date"
+            ),
             duration=_first_str(latest, "duration", "dur"),
             ber=_as_float(_first_value(latest, "ber", "BER")),
+            loss=_first_str(latest, "loss", "packet_loss"),
             temperature=_as_float(_first_value(latest, "temperature", "temp")),
             raw=raw,
         )
@@ -125,7 +131,7 @@ def _format_last_heard(entry: dict[str, Any]) -> str | None:
     callsign = _first_str(entry, "callsign", "call", "src", "src_call", "source")
     name = _first_str(entry, "name", "user_name", "fullname")
     talkgroup = _first_str(entry, "talkgroup", "tg", "dst", "dst_id", "target")
-    timestamp = _first_str(entry, "time", "timestamp", "datetime", "date")
+    timestamp = _first_str(entry, "time_utc", "time", "timestamp", "datetime", "date")
 
     parts = [part for part in (callsign, name, talkgroup, timestamp) if part]
     return " - ".join(parts) if parts else None

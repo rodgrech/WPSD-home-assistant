@@ -1,9 +1,12 @@
-# Release Notes - v0.0.2
+# Release Notes - v0.0.3
 
-Second public release of DMR Hotspot for Home Assistant.
+Third public release of DMR Hotspot for Home Assistant.
 
 ## Highlights
 
+- Adds mappings for real WPSD last-heard API output.
+- Adds source and loss sensors.
+- Maps `target` to talkgroup and `time_utc` to timestamp.
 - Fixes sensor values showing as unknown in Home Assistant.
 - Adds branding assets for HACS, GitHub, and integration packaging.
 - Adds an entry count sensor for WPSD API troubleshooting.
