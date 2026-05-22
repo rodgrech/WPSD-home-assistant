@@ -115,6 +115,8 @@ Dashboard examples are included at:
 ```text
 examples/mcs2000-card.yaml
 examples/modern-dmr-radio-card.yaml
+examples/wpsd-radio-card-mcs2000.yaml
+examples/wpsd-radio-card-r7.yaml
 ```
 
 The MCS2000 example keeps the green LCD area at a fixed size, uses Home
@@ -124,6 +126,58 @@ the changing background size issue from the earlier mockups.
 The modern DMR radio example uses a compact colour LCD style similar to current
 handheld/mobile DMR radios, with status icons, channel/talkgroup focus, and a
 more polished contemporary display.
+
+## Custom Radio Card
+
+An experimental standalone Lovelace card is included at:
+
+```text
+www/wpsd-radio-card.js
+```
+
+To use it manually, copy the file into Home Assistant under:
+
+```text
+/config/www/wpsd-radio-card.js
+```
+
+Then add it as a Lovelace resource:
+
+```text
+/local/wpsd-radio-card.js
+```
+
+MCS2000 style:
+
+```yaml
+type: custom:wpsd-radio-card
+style: mcs2000
+title: Home Assistant WPSD
+callsign_entity: sensor.dmr_hotspot_callsign
+talkgroup_entity: sensor.dmr_hotspot_talkgroup
+mode_entity: sensor.dmr_hotspot_mode
+source_entity: sensor.dmr_hotspot_source
+loss_entity: sensor.dmr_hotspot_loss
+last_heard_entity: sensor.dmr_hotspot_last_heard
+status_entity: sensor.dmr_hotspot_status
+```
+
+R7 style:
+
+```yaml
+type: custom:wpsd-radio-card
+style: r7
+callsign_entity: sensor.dmr_hotspot_callsign
+talkgroup_entity: sensor.dmr_hotspot_talkgroup
+source_entity: sensor.dmr_hotspot_source
+loss_entity: sensor.dmr_hotspot_loss
+ber_entity: sensor.dmr_hotspot_ber
+name_entity: sensor.dmr_hotspot_name
+timestamp_entity: sensor.dmr_hotspot_timestamp
+```
+
+For the MCS2000 style, double-click the right-hand `Menu` button to invert the
+LCD colours.
 
 ## Development
 

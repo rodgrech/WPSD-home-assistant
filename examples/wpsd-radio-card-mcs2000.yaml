@@ -1,0 +1,10 @@
+type: custom:wpsd-radio-card
+style: mcs2000
+title: Home Assistant WPSD
+callsign_entity: sensor.dmr_hotspot_callsign
+talkgroup_entity: sensor.dmr_hotspot_talkgroup
+mode_entity: sensor.dmr_hotspot_mode
+source_entity: sensor.dmr_hotspot_source
+loss_entity: sensor.dmr_hotspot_loss
+last_heard_entity: sensor.dmr_hotspot_last_heard
+status_entity: sensor.dmr_hotspot_status

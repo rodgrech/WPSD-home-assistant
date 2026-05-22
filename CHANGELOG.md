@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Added an experimental standalone `custom:wpsd-radio-card` Lovelace card.
+- Added `style: mcs2000` and `style: r7` options to the JS card.
+- Added example YAML files for the JS-based MCS2000 and R7 card styles.
+- Moved the MCS2000 LCD invert action to the right-hand `Menu` button.
+
 ## 0.0.4 - 2026-05-23
 
 - Changed the default polling interval from 30 seconds to 5 seconds.

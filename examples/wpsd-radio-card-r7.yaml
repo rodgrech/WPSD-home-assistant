@@ -1,0 +1,10 @@
+type: custom:wpsd-radio-card
+style: r7
+callsign_entity: sensor.dmr_hotspot_callsign
+talkgroup_entity: sensor.dmr_hotspot_talkgroup
+mode_entity: sensor.dmr_hotspot_mode
+source_entity: sensor.dmr_hotspot_source
+loss_entity: sensor.dmr_hotspot_loss
+ber_entity: sensor.dmr_hotspot_ber
+name_entity: sensor.dmr_hotspot_name
+timestamp_entity: sensor.dmr_hotspot_timestamp
