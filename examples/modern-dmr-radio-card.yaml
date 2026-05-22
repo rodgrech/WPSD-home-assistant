@@ -1,4 +1,4 @@
-# Example modern DMR radio LCD card for the DMR Hotspot integration.
+# Example modern DMR radio screen card for the DMR Hotspot integration.
 #
 # Required custom card:
 # https://github.com/custom-cards/button-card
@@ -15,14 +15,18 @@ tap_action:
   action: more-info
 styles:
   card:
-    - width: 360px
+    - width: 380px
     - max-width: 100%
     - margin: 0 auto
-    - padding: 12px
+    - padding: 0
     - border-radius: 8px
-    - background: "#202329"
-    - box-shadow: inset 0 0 0 1px #05070a, 0 8px 22px rgba(0, 0, 0, 0.28)
-    - overflow: hidden
+    - background: transparent
+    - box-shadow: none
+    - overflow: visible
+  grid:
+    - grid-template-areas: '"radio"'
+    - grid-template-columns: 1fr
+    - grid-template-rows: auto
   custom_fields:
     radio:
       - width: 100%
@@ -31,101 +35,104 @@ styles:
 custom_fields:
   radio: |
     [[[
-      const status = states['sensor.dmr_hotspot_status']?.state || 'Unknown';
       const callsign = states['sensor.dmr_hotspot_callsign']?.state || 'DMR';
       const talkgroup = states['sensor.dmr_hotspot_talkgroup']?.state || 'TG ---';
       const mode = states['sensor.dmr_hotspot_mode']?.state || 'DMR';
-      const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
       const source = states['sensor.dmr_hotspot_source']?.state || '--';
-      const lastHeard = states['sensor.dmr_hotspot_last_heard']?.state || 'No recent traffic';
-      const isConnected = status.toLowerCase() === 'connected';
+      const loss = states['sensor.dmr_hotspot_loss']?.state || '0%';
+      const duration = states['sensor.dmr_hotspot_duration']?.state;
+      const ber = states['sensor.dmr_hotspot_ber']?.state;
+      const berText = ber && ber !== 'unknown' && ber !== 'unavailable' ? `BER: ${ber}` : `LOSS: ${loss}`;
+      const durationText = duration && duration !== 'unknown' && duration !== 'unavailable' ? `${duration}s` : source;
 
       return `
         <style>
-          .dmr-modern-shell {
-            background: #0c0f14;
-            border: 1px solid #050608;
-            border-radius: 7px;
-            padding: 8px;
-            box-sizing: border-box;
-          }
-
-          .dmr-modern-lcd {
-            height: 188px;
-            padding: 0;
+          .dmr-screen {
+            width: 370px;
+            max-width: 100%;
+            height: 246px;
+            margin: 0 auto;
             overflow: hidden;
-            border: 4px solid #050608;
-            border-radius: 5px;
-            background: #d7e8f4;
-            color: #07131d;
+            box-sizing: border-box;
+            border: 8px solid #08090b;
+            border-radius: 9px;
+            background: #141414;
+            box-shadow:
+              inset 0 0 0 1px rgba(255,255,255,.05),
+              0 4px 12px rgba(0,0,0,.45);
+            color: #f3f3f3;
             font-family: Arial, Helvetica, sans-serif;
             letter-spacing: 0;
-            box-sizing: border-box;
           }
 
-          .dmr-modern-status {
-            display: flex;
+          .dmr-topbar {
+            height: 25px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            justify-content: space-between;
-            height: 24px;
+            gap: 6px;
             padding: 0 7px;
             box-sizing: border-box;
-            background: #1b5f93;
-            color: #f8fbff;
-            font-size: 12px;
-            font-weight: 700;
-            line-height: 1;
-          }
-
-          .dmr-modern-icons {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            height: 18px;
-          }
-
-          .dmr-modern-body {
-            height: 140px;
-            padding: 8px 10px 7px;
-            box-sizing: border-box;
-            display: grid;
-            grid-template-rows: 28px 45px 25px 24px;
-            row-gap: 3px;
-          }
-
-          .dmr-modern-zone {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 0;
-            gap: 8px;
-            font-size: 15px;
+            background: #3677d8;
+            color: #fff;
+            font-size: 13px;
             font-weight: 800;
             line-height: 1;
           }
 
-          .dmr-modern-zone span {
+          .dmr-date {
             min-width: 0;
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
           }
 
-          .dmr-modern-zone span:first-child {
-            flex: 1 1 auto;
+          .dmr-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #39e35c;
+            box-shadow: 0 0 5px rgba(57,227,92,.7);
           }
 
-          .dmr-modern-zone span:last-child {
-            flex: 0 0 auto;
-          }
-
-          .dmr-modern-callsign {
-            display: flex;
+          .dmr-status-icons {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
+            gap: 5px;
             min-width: 0;
-            color: #052b4a;
-            font-size: 30px;
+          }
+
+          .dmr-body {
+            height: 180px;
+            display: grid;
+            grid-template-rows: 36px 52px 31px 26px;
+            align-items: center;
+            justify-items: center;
+            padding: 20px 14px 12px;
+            box-sizing: border-box;
+            background:
+              radial-gradient(circle at 50% 22%, rgba(255,255,255,.08), transparent 30%),
+              #171717;
+          }
+
+          .dmr-talkgroup {
+            min-width: 0;
+            max-width: 100%;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .dmr-callsign {
+            min-width: 0;
+            max-width: 100%;
+            color: #e1e1e1;
+            font-size: 29px;
             font-weight: 900;
             line-height: 1;
             text-transform: uppercase;
@@ -134,27 +141,22 @@ custom_fields:
             text-overflow: ellipsis;
           }
 
-          .dmr-modern-talkgroup {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+          .dmr-meta {
             min-width: 0;
-            border-radius: 3px;
-            background: #f4c542;
-            color: #15110a;
-            font-size: 20px;
-            font-weight: 900;
+            max-width: 100%;
+            color: #aeb0b4;
+            font-size: 16px;
+            font-weight: 800;
             line-height: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
 
-          .dmr-modern-last {
-            display: flex;
-            align-items: center;
+          .dmr-submeta {
             min-width: 0;
-            color: #19242e;
+            max-width: 100%;
+            color: #c8c8c8;
             font-size: 14px;
             font-weight: 700;
             line-height: 1;
@@ -163,60 +165,55 @@ custom_fields:
             text-overflow: ellipsis;
           }
 
-          .dmr-modern-softkeys {
+          .dmr-softkeys {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            height: 24px;
-            background: #1b5f93;
-            color: #f8fbff;
-            font-size: 11px;
-            font-weight: 800;
-            line-height: 24px;
+            grid-template-columns: 1fr 1fr;
+            height: 29px;
+            background: #3677d8;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 900;
+            line-height: 29px;
             text-align: center;
           }
 
-          .dmr-modern-softkeys span + span {
-            border-left: 1px solid rgba(255, 255, 255, 0.28);
+          .dmr-softkeys span + span {
+            border-left: 1px solid rgba(255,255,255,.36);
           }
 
           ha-icon {
-            --mdc-icon-size: 15px;
-            width: 15px;
-            height: 15px;
+            --mdc-icon-size: 14px;
+            width: 14px;
+            height: 14px;
             display: inline-flex;
-            flex: 0 0 15px;
+            flex: 0 0 14px;
             align-items: center;
             justify-content: center;
             line-height: 1;
           }
         </style>
 
-        <div class="dmr-modern-shell">
-          <div class="dmr-modern-lcd">
-            <div class="dmr-modern-status">
-              <span class="dmr-modern-icons">
-                <ha-icon icon="${isConnected ? 'mdi:access-point' : 'mdi:access-point-off'}"></ha-icon>
-                <ha-icon icon="mdi:radio-tower"></ha-icon>
-                <ha-icon icon="mdi:battery-high"></ha-icon>
-              </span>
-              <span>${network}</span>
-            </div>
+        <div class="dmr-screen">
+          <div class="dmr-topbar">
+            <span class="dmr-date">26/08/25</span>
+            <span class="dmr-dot"></span>
+            <span class="dmr-status-icons">
+              <ha-icon icon="mdi:wifi"></ha-icon>
+              <ha-icon icon="mdi:signal-cellular-3"></ha-icon>
+              <span>07:39 pm</span>
+            </span>
+          </div>
 
-            <div class="dmr-modern-body">
-              <div class="dmr-modern-zone">
-                <span>${mode}</span>
-                <span>${source}</span>
-              </div>
-              <div class="dmr-modern-callsign">${callsign}</div>
-              <div class="dmr-modern-talkgroup">${talkgroup}</div>
-              <div class="dmr-modern-last">${lastHeard}</div>
-            </div>
+          <div class="dmr-body">
+            <div class="dmr-talkgroup">TG: ${talkgroup}</div>
+            <div class="dmr-callsign">${callsign}</div>
+            <div class="dmr-meta">${mode} - ${durationText}</div>
+            <div class="dmr-submeta">${berText}</div>
+          </div>
 
-            <div class="dmr-modern-softkeys">
-              <span>MON</span>
-              <span>SCAN</span>
-              <span>MENU</span>
-            </div>
+          <div class="dmr-softkeys">
+            <span>Zones</span>
+            <span>Contacts</span>
           </div>
         </div>
       `;

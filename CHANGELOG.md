@@ -26,6 +26,9 @@
   card examples.
 - Reworked the MCS2000-style dashboard example to use native responsive columns
   instead of transform scaling, reducing horizontal clipping.
+- Redesigned the modern DMR radio example to more closely match the original
+  handheld-style screen concept.
+- Increased the modern DMR radio example size for better readability.
 
 ## 0.0.2 - 2026-05-22
 
