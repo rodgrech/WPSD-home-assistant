@@ -20,9 +20,15 @@ styles:
     - background: "#101010"
     - box-shadow: inset 0 0 0 1px #000, 0 8px 22px rgba(0, 0, 0, 0.35)
     - overflow: hidden
+  grid:
+    - grid-template-areas: '"radio"'
+    - grid-template-columns: 1fr
+    - grid-template-rows: auto
   custom_fields:
     radio:
       - width: 100%
+      - display: block
+      - line-height: 0
 custom_fields:
   radio: |
     [[[
@@ -367,7 +373,7 @@ custom_fields:
                 </div>
                 <div class="mcs-knob"></div>
                 <span class="mcs-pill">Zone</span>
-                <div class="mcs-port" title="Double tap to invert LCD" ondblclick="this.closest('.mcs-radio').classList.toggle('mcs-invert'); event.stopPropagation();"></div>
+                <div class="mcs-port" title="Mic socket"></div>
                 <span class="mcs-pill">Page</span>
                 <span></span>
                 <span class="mcs-pill">Opt</span>

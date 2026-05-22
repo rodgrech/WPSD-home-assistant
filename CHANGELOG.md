@@ -10,11 +10,13 @@
 - Redesigned the MCS2000-style dashboard example as a full radio front panel.
 - Improved the MCS2000-style dashboard example so it scales within narrow
   dashboard columns instead of clipping.
-- Added a double-tap LCD colour invert toggle on the MCS2000 mic socket.
+- Added inverted LCD styling hooks for the MCS2000-style card.
 - Removed the rear chassis from the MCS2000-style dashboard example so only the
   control head is shown.
 - Hid the default button-card icon and made the MCS2000-style example more
   reliable in narrow dashboard layouts.
+- Forced the MCS2000-style dashboard example to render its custom field in
+  button-card layouts.
 
 ## 0.0.2 - 2026-05-22
 
