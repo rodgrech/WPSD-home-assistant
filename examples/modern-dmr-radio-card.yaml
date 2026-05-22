@@ -1,4 +1,4 @@
-# Example modern DMR handheld-style Lovelace card for the DMR Hotspot integration.
+# Example Motorola R7-inspired Lovelace card for the DMR Hotspot integration.
 #
 # Required custom card:
 # https://github.com/custom-cards/button-card
@@ -10,12 +10,12 @@ show_state: false
 show_icon: false
 grid_options:
   columns: 5
-  rows: 5
+  rows: 6
 tap_action:
   action: more-info
 styles:
   card:
-    - width: 300px
+    - width: 320px
     - max-width: 100%
     - margin: 0 auto
     - padding: 0
@@ -38,42 +38,49 @@ custom_fields:
       const callsign = states['sensor.dmr_hotspot_callsign']?.state || 'DMR';
       const talkgroup = states['sensor.dmr_hotspot_talkgroup']?.state || 'TG ---';
       const mode = states['sensor.dmr_hotspot_mode']?.state || 'DMR';
+      const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
       const source = states['sensor.dmr_hotspot_source']?.state || '--';
       const loss = states['sensor.dmr_hotspot_loss']?.state || '0%';
-      const duration = states['sensor.dmr_hotspot_duration']?.state;
+      const ber = states['sensor.dmr_hotspot_ber']?.state;
       const name = states['sensor.dmr_hotspot_name']?.state;
+      const timestamp = states['sensor.dmr_hotspot_timestamp']?.state || '';
       const caller = name && name !== 'unknown' && name !== 'unavailable' ? `${callsign} - ${name}` : callsign;
-      const durationText = duration && duration !== 'unknown' && duration !== 'unavailable' ? `${duration}s` : source;
+      const dateText = timestamp && timestamp.length >= 10 ? timestamp.slice(0, 10).split('-').reverse().join('/') : '22/05/2026';
+      const timeText = timestamp && timestamp.length >= 16 ? timestamp.slice(11, 16) : '19:29';
+      const channel = talkgroup.replace('TG ', '');
+      const berText = ber && ber !== 'unknown' && ber !== 'unavailable' ? ber : '--';
+      const zoneLine = `BER ${berText} / Loss ${loss}`;
+      const activity = source.toLowerCase() === 'rf' ? 'tx' : source.toLowerCase() === 'net' ? 'rx' : 'standby';
 
       return `
         <style>
           .r7-radio {
-            width: 284px;
+            width: 300px;
             max-width: 100%;
             margin: 0 auto;
-            padding: 12px 14px 11px;
+            padding: 12px 16px 14px;
             box-sizing: border-box;
-            border-radius: 17px 17px 12px 12px;
+            border-radius: 22px 22px 14px 14px;
             background:
-              linear-gradient(90deg, #17191d 0 8px, transparent 8px calc(100% - 8px), #17191d calc(100% - 8px)),
-              linear-gradient(#363a3f, #15171a);
+              linear-gradient(90deg, #111316 0 13px, transparent 13px calc(100% - 13px), #111316 calc(100% - 13px)),
+              linear-gradient(#373b40, #111316);
             border: 2px solid #070809;
             box-shadow:
-              inset 0 1px 0 rgba(255,255,255,.16),
-              inset 0 -5px 10px rgba(0,0,0,.38),
-              0 5px 14px rgba(0,0,0,.42);
-            color: #0b1823;
+              inset 0 1px 0 rgba(255,255,255,.14),
+              inset 0 -8px 12px rgba(0,0,0,.44),
+              0 5px 14px rgba(0,0,0,.44);
+            color: #152737;
             font-family: Arial, Helvetica, sans-serif;
             letter-spacing: 0;
           }
 
           .r7-brand {
-            height: 18px;
+            height: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #d8dde2;
-            font-size: 11px;
+            color: #e7ecef;
+            font-size: 14px;
             font-weight: 900;
             line-height: 1;
             text-transform: uppercase;
@@ -83,180 +90,151 @@ custom_fields:
             padding: 6px;
             border-radius: 7px;
             background: #070809;
-            box-shadow: inset 0 0 0 1px #2d3236;
+            box-shadow: inset 0 0 0 1px #2f363b;
           }
 
           .r7-screen {
-            height: 205px;
+            height: 221px;
             overflow: hidden;
             border-radius: 3px;
-            background: #d9e7ee;
+            background:
+              radial-gradient(circle at 30% 82%, rgba(17, 146, 210, .45), transparent 30%),
+              radial-gradient(circle at 78% 72%, rgba(75, 194, 225, .35), transparent 34%),
+              linear-gradient(#dcf8fb 0 52%, #9fe7ee 72%, #40c5e1 100%);
             box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);
           }
 
-          .r7-status {
-            height: 24px;
+          .r7-iconbar {
+            height: 26px;
             display: grid;
             grid-template-columns: 1fr auto;
             align-items: center;
             gap: 5px;
-            padding: 0 6px;
+            padding: 0 8px;
             box-sizing: border-box;
-            background: #2c79c7;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 800;
-            line-height: 1;
-          }
-
-          .r7-icons {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-          }
-
-          .r7-main {
-            height: 146px;
-            display: grid;
-            grid-template-rows: 26px 68px 42px;
-            padding: 6px 7px;
-            box-sizing: border-box;
-            row-gap: 5px;
-          }
-
-          .r7-zone {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-width: 0;
-            color: #172d3d;
+            background: #1a2230;
+            color: #f2f7fb;
             font-size: 12px;
             font-weight: 800;
             line-height: 1;
           }
 
-          .r7-zone span {
+          .r7-status-icons {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+          }
+
+          .r7-datebar {
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
+            background: rgba(194, 241, 245, .82);
+            color: #183244;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1;
+          }
+
+          .r7-main {
+            height: 151px;
+            padding: 8px 13px;
+            box-sizing: border-box;
+          }
+
+          .r7-card {
+            height: 126px;
+            display: grid;
+            grid-template-columns: 10px 1fr;
+            padding: 0;
+            box-sizing: border-box;
+            background: rgba(252, 252, 238, .9);
+            border: 1px solid rgba(120, 155, 166, .7);
+            box-shadow: 0 2px 4px rgba(0,0,0,.2);
+          }
+
+          .r7-activity {
+            background: ${activity === 'tx' ? '#d92323' : activity === 'rx' ? '#ffd51f' : '#178ee8'};
+            border-right: 1px solid rgba(120, 155, 166, .48);
+            animation: ${activity === 'standby' ? 'none' : 'r7-activity-pulse 900ms steps(2, end) infinite'};
+          }
+
+          @keyframes r7-activity-pulse {
+            0%, 45% {
+              opacity: 1;
+            }
+            46%, 100% {
+              opacity: .52;
+            }
+          }
+
+          .r7-lines {
             min-width: 0;
+            display: grid;
+            grid-template-rows: 31px 43px 31px;
+            row-gap: 3px;
+            padding: 11px 14px;
+            box-sizing: border-box;
+          }
+
+          .r7-zone {
+            min-width: 0;
+            color: #355264;
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
 
           .r7-channel {
-            padding: 8px 9px;
-            box-sizing: border-box;
-            background: #f7fbfe;
-            border: 1px solid #b7c9d5;
-            border-radius: 2px;
-          }
-
-          .r7-channel-label {
-            color: #6c7d87;
-            font-size: 10px;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 5px;
-          }
-
-          .r7-callsign {
             min-width: 0;
-            color: #092a45;
+            color: #1f2f38;
             font-size: 24px;
             font-weight: 900;
             line-height: 1;
-            text-transform: uppercase;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
 
-          .r7-message {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 8px;
-            box-sizing: border-box;
-            background: #eef7fb;
-            border: 1px solid #b7c9d5;
-            border-radius: 2px;
-            color: #16364d;
-          }
-
-          .r7-message-title {
+          .r7-caller {
             min-width: 0;
-            font-size: 11px;
-            font-weight: 900;
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          .r7-message-sub {
-            min-width: 0;
-            margin-top: 4px;
-            font-size: 10px;
-            font-weight: 800;
+            color: #5d707b;
+            font-size: 16px;
+            font-weight: 500;
             line-height: 1;
-            color: #5b6d79;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-          }
-
-          .r7-message-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #2c79c7;
-            box-shadow: 0 0 0 2px rgba(44,121,199,.18);
           }
 
           .r7-softkeys {
-            height: 29px;
+            height: 34px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            background: #2c79c7;
+            background: #1798d0;
             color: #fff;
-            font-size: 11px;
+            font-size: 22px;
             font-weight: 900;
-            line-height: 29px;
+            line-height: 34px;
             text-align: center;
           }
 
           .r7-softkeys span + span {
-            border-left: 1px solid rgba(255,255,255,.35);
-          }
-
-          .r7-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1.4fr 1fr;
-            gap: 8px;
-            padding: 9px 24px 0;
-            box-sizing: border-box;
-          }
-
-          .r7-button {
-            height: 21px;
-            border-radius: 3px;
-            background: linear-gradient(#24272b, #0b0c0e);
-            border: 1px solid #050505;
-            color: #f2f2f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            font-weight: 900;
-            line-height: 1;
+            border-left: 1px solid rgba(255,255,255,.45);
           }
 
           ha-icon {
-            --mdc-icon-size: 13px;
-            width: 13px;
-            height: 13px;
+            --mdc-icon-size: 15px;
+            width: 15px;
+            height: 15px;
             display: inline-flex;
-            flex: 0 0 13px;
+            flex: 0 0 15px;
             align-items: center;
             justify-content: center;
             line-height: 1;
@@ -267,46 +245,36 @@ custom_fields:
           <div class="r7-brand">WPSD DMR</div>
           <div class="r7-screen-bezel">
             <div class="r7-screen">
-              <div class="r7-status">
-                <span>${mode}</span>
-                <span class="r7-icons">
-                  <ha-icon icon="mdi:wifi"></ha-icon>
+              <div class="r7-iconbar">
+                <span class="r7-status-icons">
                   <ha-icon icon="mdi:signal-cellular-3"></ha-icon>
-                  <ha-icon icon="mdi:battery-high"></ha-icon>
+                  <ha-icon icon="mdi:wifi"></ha-icon>
+                  <ha-icon icon="mdi:volume-high"></ha-icon>
                 </span>
+                <span>${source}</span>
+              </div>
+
+              <div class="r7-datebar">
+                <span>${dateText}</span>
+                <span>${timeText}</span>
               </div>
 
               <div class="r7-main">
-                <div class="r7-zone">
-                  <span>${talkgroup}</span>
-                  <span>${source}</span>
-                </div>
-
-                <div class="r7-channel">
-                  <div class="r7-channel-label">Channel</div>
-                  <div class="r7-callsign">${callsign}</div>
-                </div>
-
-                <div class="r7-message">
-                  <div>
-                    <div class="r7-message-title">${caller}</div>
-                    <div class="r7-message-sub">${durationText} - loss ${loss}</div>
+                <div class="r7-card">
+                  <div class="r7-activity"></div>
+                  <div class="r7-lines">
+                    <div class="r7-zone">${zoneLine}</div>
+                    <div class="r7-channel">${channel}</div>
+                    <div class="r7-caller">${caller}</div>
                   </div>
-                  <span class="r7-message-dot"></span>
                 </div>
               </div>
 
               <div class="r7-softkeys">
                 <span>Zones</span>
-                <span>Contacts</span>
+                <span>Contact</span>
               </div>
             </div>
-          </div>
-
-          <div class="r7-buttons">
-            <span class="r7-button">P1</span>
-            <span class="r7-button">OK</span>
-            <span class="r7-button">P2</span>
           </div>
         </div>
       `;

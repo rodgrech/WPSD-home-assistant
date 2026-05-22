@@ -31,6 +31,13 @@
 - Increased the modern DMR radio example size for better readability.
 - Rethemed the modern DMR radio example toward a Motorola R7-style handheld
   screen layout.
+- Tuned the modern DMR radio example against a real R7 reference photo.
+- Simplified the modern DMR radio example to the screen-only R7 layout, with
+  zone, channel, and caller lines plus an RF activity strip.
+- Updated the modern DMR radio example activity strip colours: red for RF/TX,
+  yellow for Net/RX, and blue for standby.
+- Updated the modern DMR radio example channel label to show the active
+  talkgroup.
 
 ## 0.0.2 - 2026-05-22
 
