@@ -1,9 +1,12 @@
-# Release Notes - v0.0.1
+# Release Notes - v0.0.2
 
-Initial public release of DMR Hotspot for Home Assistant.
+Second public release of DMR Hotspot for Home Assistant.
 
 ## Highlights
 
+- Fixes sensor values showing as unknown in Home Assistant.
+- Adds branding assets for HACS, GitHub, and integration packaging.
+- Adds an entry count sensor for WPSD API troubleshooting.
 - Local polling support for the WPSD API.
 - Home Assistant config flow setup.
 - Sensors for hotspot and last-heard values.

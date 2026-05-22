@@ -6,7 +6,11 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-from homeassistant.components.sensor import SensorDeviceClass, SensorEntityDescription
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
@@ -30,6 +34,11 @@ SENSORS: tuple[DmrHotspotSensorDescription, ...] = (
         key="status",
         translation_key="status",
         value_fn=lambda data: "Connected" if data.connected else "Disconnected",
+    ),
+    DmrHotspotSensorDescription(
+        key="entry_count",
+        translation_key="entry_count",
+        value_fn=lambda data: data.entry_count,
     ),
     DmrHotspotSensorDescription(
         key="callsign",
@@ -103,7 +112,7 @@ async def async_setup_entry(
     )
 
 
-class DmrHotspotSensor(CoordinatorEntity[DmrHotspotData]):
+class DmrHotspotSensor(CoordinatorEntity[DmrHotspotData], SensorEntity):
     """DMR hotspot sensor."""
 
     entity_description: DmrHotspotSensorDescription
@@ -118,6 +127,7 @@ class DmrHotspotSensor(CoordinatorEntity[DmrHotspotData]):
         super().__init__(coordinator)
         self.entity_description = description
         self._attr_unique_id = f"{entry.entry_id}_{description.key}"
+        self._attr_has_entity_name = True
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": "DMR Hotspot",
@@ -127,4 +137,7 @@ class DmrHotspotSensor(CoordinatorEntity[DmrHotspotData]):
     @property
     def native_value(self) -> Any:
         """Return the sensor value."""
+        if self.coordinator.data is None:
+            return None
+
         return self.entity_description.value_fn(self.coordinator.data)

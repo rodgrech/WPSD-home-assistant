@@ -1,9 +1,11 @@
 # DMR Hotspot for Home Assistant
 
+![DMR Hotspot logo](assets/hacs-icon.png)
+
 A custom Home Assistant integration for monitoring a DMR hotspot such as WPSD,
 Pi-Star, or an MMDVMHost-based gateway.
 
-Version: `0.0.1`
+Version: `0.0.2`
 
 ## Features
 
@@ -14,6 +16,19 @@ Version: `0.0.1`
 - Example MCS2000-style Lovelace card layout
 - Example modern DMR radio LCD Lovelace card layout
 - HACS-ready repository layout
+
+## Branding
+
+Branding assets are included in:
+
+```text
+assets/
+custom_components/dmr_hotspot/icon.png
+custom_components/dmr_hotspot/logo.png
+```
+
+These are ready for the next revision and for future Home Assistant Brands
+submission work.
 
 ## Installation
 

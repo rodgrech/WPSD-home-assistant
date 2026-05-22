@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.2 - 2026-05-22
+
+- Added branding assets for HACS, GitHub, and integration packaging.
+- Fixed sensor entity inheritance for Home Assistant sensor values.
+- Added entry count sensor to make WPSD API polling easier to verify.
+
 ## 0.0.1 - 2026-05-22
 
 Initial release preparation.

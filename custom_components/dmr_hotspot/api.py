@@ -17,6 +17,7 @@ class DmrHotspotData:
     """Normalized DMR hotspot data."""
 
     connected: bool
+    entry_count: int = 0
     callsign: str | None = None
     name: str | None = None
     country: str | None = None
@@ -71,6 +72,7 @@ class DmrHotspotClient:
 
         return DmrHotspotData(
             connected=True,
+            entry_count=len(entries),
             callsign=_first_str(
                 latest,
                 "callsign",
