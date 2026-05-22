@@ -1,0 +1,11 @@
+{
+  "domain": "dmr_hotspot",
+  "name": "DMR Hotspot",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/rodgrech/WPSD-home-assistant",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/rodgrech/WPSD-home-assistant/issues",
+  "requirements": [],
+  "version": "0.0.1"
+}

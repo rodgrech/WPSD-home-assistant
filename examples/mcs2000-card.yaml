@@ -1,0 +1,161 @@
+# Example Lovelace card for the DMR Hotspot integration.
+#
+# This uses core Home Assistant custom button-card style syntax. If you prefer
+# a dependency-free version, use this as the visual spec and recreate the same
+# CSS in a native custom card later.
+#
+# Required custom card:
+# https://github.com/custom-cards/button-card
+
+type: custom:button-card
+entity: sensor.dmr_hotspot_status
+show_name: false
+show_state: false
+tap_action:
+  action: more-info
+styles:
+  card:
+    - width: 420px
+    - max-width: 100%
+    - margin: 0 auto
+    - padding: 14px 14px 12px
+    - border-radius: 8px
+    - background: "#151515"
+    - box-shadow: inset 0 0 0 2px #050505, 0 8px 22px rgba(0, 0, 0, 0.35)
+    - overflow: hidden
+  custom_fields:
+    radio:
+      - width: 100%
+custom_fields:
+  radio: |
+    [[[
+      const callsign = states['sensor.dmr_hotspot_callsign']?.state || 'DMR';
+      const talkgroup = states['sensor.dmr_hotspot_talkgroup']?.state || 'TG ---';
+      const mode = states['sensor.dmr_hotspot_mode']?.state || 'DMR';
+      const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
+      const lastHeard = states['sensor.dmr_hotspot_last_heard']?.state || 'No recent traffic';
+      const temp = states['sensor.dmr_hotspot_temperature']?.state;
+      const tempText = temp && temp !== 'unknown' && temp !== 'unavailable' ? `${temp} C` : '-- C';
+
+      return `
+        <style>
+          .dmr-shell {
+            background: linear-gradient(#242424, #0d0d0d);
+            border: 1px solid #050505;
+            border-radius: 6px;
+            padding: 10px;
+            box-sizing: border-box;
+          }
+
+          .dmr-badge-strip {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 8px;
+            height: 24px;
+            color: #d7d7d7;
+            font: 700 12px/1 Arial, sans-serif;
+            letter-spacing: 0;
+            margin: 0 0 8px;
+            white-space: nowrap;
+          }
+
+          .dmr-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+          }
+
+          .dmr-icons {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #bfc7c9;
+          }
+
+          .dmr-lcd {
+            width: 348px;
+            max-width: 100%;
+            height: 164px;
+            margin: 0 auto;
+            padding: 10px 12px 8px;
+            box-sizing: border-box;
+            overflow: hidden;
+            background: #8fa653;
+            border: 7px solid #070707;
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+            color: #10150d;
+            font-family: "Arial Narrow", Arial, sans-serif;
+            letter-spacing: 0;
+          }
+
+          .dmr-row {
+            display: flex;
+            align-items: center;
+            min-height: 24px;
+            line-height: 1.05;
+          }
+
+          .dmr-row + .dmr-row {
+            margin-top: 4px;
+          }
+
+          .dmr-callsign {
+            justify-content: center;
+            font-size: 34px;
+            font-weight: 900;
+            text-transform: uppercase;
+          }
+
+          .dmr-talkgroup {
+            justify-content: center;
+            font-size: 25px;
+            font-weight: 800;
+          }
+
+          .dmr-meta {
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+          }
+
+          .dmr-last-heard {
+            display: block;
+            margin-top: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.05;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        </style>
+
+        <div class="dmr-shell">
+          <div class="dmr-badge-strip">
+            <span class="dmr-brand">
+              <ha-icon icon="mdi:home-assistant"></ha-icon>
+              <span>Home Assistant WPSD</span>
+            </span>
+            <span class="dmr-icons">
+              <ha-icon icon="mdi:radio-tower"></ha-icon>
+              <ha-icon icon="mdi:access-point"></ha-icon>
+              <ha-icon icon="mdi:thermometer"></ha-icon>
+            </span>
+          </div>
+
+          <div class="dmr-lcd">
+            <div class="dmr-row dmr-callsign">${callsign}</div>
+            <div class="dmr-row dmr-talkgroup">${talkgroup}</div>
+            <div class="dmr-row dmr-meta">
+              <span>${mode}</span>
+              <span>${network}</span>
+              <span>${tempText}</span>
+            </div>
+            <span class="dmr-last-heard">${lastHeard}</span>
+          </div>
+        </div>
+      `;
+    ]]]

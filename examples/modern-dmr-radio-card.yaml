@@ -1,0 +1,194 @@
+# Example modern DMR radio LCD card for the DMR Hotspot integration.
+#
+# Required custom card:
+# https://github.com/custom-cards/button-card
+
+type: custom:button-card
+entity: sensor.dmr_hotspot_status
+show_name: false
+show_state: false
+tap_action:
+  action: more-info
+styles:
+  card:
+    - width: 360px
+    - max-width: 100%
+    - margin: 0 auto
+    - padding: 12px
+    - border-radius: 8px
+    - background: "#202329"
+    - box-shadow: inset 0 0 0 1px #05070a, 0 8px 22px rgba(0, 0, 0, 0.28)
+    - overflow: hidden
+  custom_fields:
+    radio:
+      - width: 100%
+custom_fields:
+  radio: |
+    [[[
+      const status = states['sensor.dmr_hotspot_status']?.state || 'Unknown';
+      const callsign = states['sensor.dmr_hotspot_callsign']?.state || 'DMR';
+      const talkgroup = states['sensor.dmr_hotspot_talkgroup']?.state || 'TG ---';
+      const mode = states['sensor.dmr_hotspot_mode']?.state || 'DMR';
+      const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
+      const lastHeard = states['sensor.dmr_hotspot_last_heard']?.state || 'No recent traffic';
+      const temp = states['sensor.dmr_hotspot_temperature']?.state;
+      const tempText = temp && temp !== 'unknown' && temp !== 'unavailable' ? `${temp} C` : '-- C';
+      const isConnected = status.toLowerCase() === 'connected';
+
+      return `
+        <style>
+          .dmr-modern-shell {
+            background: #0c0f14;
+            border: 1px solid #050608;
+            border-radius: 7px;
+            padding: 8px;
+            box-sizing: border-box;
+          }
+
+          .dmr-modern-lcd {
+            height: 188px;
+            padding: 0;
+            overflow: hidden;
+            border: 4px solid #050608;
+            border-radius: 5px;
+            background: #d7e8f4;
+            color: #07131d;
+            font-family: Arial, Helvetica, sans-serif;
+            letter-spacing: 0;
+            box-sizing: border-box;
+          }
+
+          .dmr-modern-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 24px;
+            padding: 0 7px;
+            box-sizing: border-box;
+            background: #1b5f93;
+            color: #f8fbff;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+          }
+
+          .dmr-modern-icons {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+          }
+
+          .dmr-modern-body {
+            height: 140px;
+            padding: 8px 10px 7px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-rows: 28px 45px 25px 24px;
+            row-gap: 3px;
+          }
+
+          .dmr-modern-zone {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 0;
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1;
+          }
+
+          .dmr-modern-callsign {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            color: #052b4a;
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .dmr-modern-talkgroup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            border-radius: 3px;
+            background: #f4c542;
+            color: #15110a;
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .dmr-modern-last {
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            color: #19242e;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .dmr-modern-softkeys {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            height: 24px;
+            background: #1b5f93;
+            color: #f8fbff;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 24px;
+            text-align: center;
+          }
+
+          .dmr-modern-softkeys span + span {
+            border-left: 1px solid rgba(255, 255, 255, 0.28);
+          }
+
+          ha-icon {
+            --mdc-icon-size: 15px;
+          }
+        </style>
+
+        <div class="dmr-modern-shell">
+          <div class="dmr-modern-lcd">
+            <div class="dmr-modern-status">
+              <span class="dmr-modern-icons">
+                <ha-icon icon="${isConnected ? 'mdi:access-point' : 'mdi:access-point-off'}"></ha-icon>
+                <ha-icon icon="mdi:radio-tower"></ha-icon>
+                <ha-icon icon="mdi:battery-high"></ha-icon>
+              </span>
+              <span>${network}</span>
+            </div>
+
+            <div class="dmr-modern-body">
+              <div class="dmr-modern-zone">
+                <span>${mode}</span>
+                <span>${tempText}</span>
+              </div>
+              <div class="dmr-modern-callsign">${callsign}</div>
+              <div class="dmr-modern-talkgroup">${talkgroup}</div>
+              <div class="dmr-modern-last">${lastHeard}</div>
+            </div>
+
+            <div class="dmr-modern-softkeys">
+              <span>MON</span>
+              <span>SCAN</span>
+              <span>MENU</span>
+            </div>
+          </div>
+        </div>
+      `;
+    ]]]

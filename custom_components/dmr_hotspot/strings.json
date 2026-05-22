@@ -1,0 +1,60 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "DMR Hotspot",
+        "description": "Connect to your local DMR hotspot.",
+        "data": {
+          "url": "Hotspot URL",
+          "scan_interval": "Scan interval"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not connect to the DMR hotspot."
+    },
+    "abort": {
+      "already_configured": "This DMR hotspot is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status"
+      },
+      "callsign": {
+        "name": "Callsign"
+      },
+      "name": {
+        "name": "Name"
+      },
+      "country": {
+        "name": "Country"
+      },
+      "mode": {
+        "name": "Mode"
+      },
+      "network": {
+        "name": "Network"
+      },
+      "talkgroup": {
+        "name": "Talkgroup"
+      },
+      "last_heard": {
+        "name": "Last heard"
+      },
+      "timestamp": {
+        "name": "Timestamp"
+      },
+      "duration": {
+        "name": "Duration"
+      },
+      "ber": {
+        "name": "BER"
+      },
+      "temperature": {
+        "name": "Temperature"
+      }
+    }
+  }
+}

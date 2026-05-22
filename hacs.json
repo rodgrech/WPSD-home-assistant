@@ -1,0 +1,6 @@
+{
+  "name": "DMR Hotspot",
+  "render_readme": true,
+  "domains": ["sensor"],
+  "homeassistant": "2024.8.0"
+}
