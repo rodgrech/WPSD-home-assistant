@@ -20,6 +20,10 @@ Version: `0.0.3`
 Supported WPSD last-heard fields include `time_utc`, `mode`, `callsign`,
 `name`, `country`, `target`, `src`, `duration`, and `loss`.
 
+## Screenshot
+
+![DMR Hotspot device page](assets/screenshots/device-page.png)
+
 ## Branding
 
 Branding assets are included in:
