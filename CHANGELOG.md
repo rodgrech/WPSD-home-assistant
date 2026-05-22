@@ -7,6 +7,7 @@
 - Added source and loss sensors.
 - Updated dashboard examples to use the source sensor.
 - Added explicit fallback names for all sensors.
+- Redesigned the MCS2000-style dashboard example as a full radio front panel.
 
 ## 0.0.2 - 2026-05-22
 

@@ -1,8 +1,4 @@
-# Example Lovelace card for the DMR Hotspot integration.
-#
-# This uses core Home Assistant custom button-card style syntax. If you prefer
-# a dependency-free version, use this as the visual spec and recreate the same
-# CSS in a native custom card later.
+# Example MCS2000-style Lovelace card for the DMR Hotspot integration.
 #
 # Required custom card:
 # https://github.com/custom-cards/button-card
@@ -15,13 +11,13 @@ tap_action:
   action: more-info
 styles:
   card:
-    - width: 420px
+    - width: 760px
     - max-width: 100%
     - margin: 0 auto
-    - padding: 14px 14px 12px
+    - padding: 10px
     - border-radius: 8px
-    - background: "#151515"
-    - box-shadow: inset 0 0 0 2px #050505, 0 8px 22px rgba(0, 0, 0, 0.35)
+    - background: "#101010"
+    - box-shadow: inset 0 0 0 1px #000, 0 8px 22px rgba(0, 0, 0, 0.35)
     - overflow: hidden
   custom_fields:
     radio:
@@ -32,130 +28,395 @@ custom_fields:
       const callsign = states['sensor.dmr_hotspot_callsign']?.state || 'DMR';
       const talkgroup = states['sensor.dmr_hotspot_talkgroup']?.state || 'TG ---';
       const mode = states['sensor.dmr_hotspot_mode']?.state || 'DMR';
-      const network = states['sensor.dmr_hotspot_network']?.state || 'WPSD';
       const source = states['sensor.dmr_hotspot_source']?.state || '--';
       const lastHeard = states['sensor.dmr_hotspot_last_heard']?.state || 'No recent traffic';
-      const temp = states['sensor.dmr_hotspot_temperature']?.state;
-      const tempText = temp && temp !== 'unknown' && temp !== 'unavailable' ? `${temp} C` : '-- C';
+      const loss = states['sensor.dmr_hotspot_loss']?.state || '--';
+      const status = states['sensor.dmr_hotspot_status']?.state || 'Unknown';
+      const displayLine = lastHeard.length > 30 ? `${callsign} ${talkgroup}` : lastHeard;
 
       return `
         <style>
-          .dmr-shell {
-            background: linear-gradient(#242424, #0d0d0d);
-            border: 1px solid #050505;
-            border-radius: 6px;
-            padding: 10px;
+          .mcs-wrap {
+            width: 100%;
             box-sizing: border-box;
+            overflow-x: auto;
           }
 
-          .dmr-badge-strip {
+          .mcs-radio {
+            width: 720px;
+            height: 214px;
+            margin: 0 auto;
+            position: relative;
+            box-sizing: border-box;
+            color: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+          }
+
+          .mcs-top {
+            position: absolute;
+            left: 80px;
+            right: 92px;
+            top: 0;
+            height: 54px;
+            background: linear-gradient(#777, #4e4e4e);
+            border-radius: 8px 8px 2px 2px;
+            clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+            box-shadow: inset 0 2px 0 rgba(255,255,255,.22);
+          }
+
+          .mcs-face {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 48px;
+            height: 160px;
+            display: grid;
+            grid-template-columns: 112px 1fr 156px;
+            gap: 10px;
+            padding: 11px 12px;
+            box-sizing: border-box;
+            background: linear-gradient(#2b2d2f, #121416);
+            border: 3px solid #050505;
+            border-radius: 28px 10px 18px 18px;
+            box-shadow:
+              inset 0 2px 0 rgba(255,255,255,.24),
+              inset 0 -5px 0 rgba(0,0,0,.38),
+              0 6px 13px rgba(0,0,0,.45);
+          }
+
+          .mcs-left {
+            position: relative;
+            display: grid;
+            grid-template-columns: 42px 46px;
+            grid-template-rows: 20px 34px 34px 34px;
+            column-gap: 8px;
+            row-gap: 6px;
+            align-items: center;
+          }
+
+          .mcs-leds {
+            grid-column: 1 / 3;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding-left: 4px;
+          }
+
+          .mcs-led {
+            width: 30px;
+            height: 7px;
+            border-radius: 6px;
+            background: #272d27;
+            box-shadow: inset 0 1px 2px #000;
+          }
+
+          .mcs-led.rx {
+            background: #d6a538;
+            box-shadow: 0 0 8px rgba(255,190,64,.65);
+          }
+
+          .mcs-led.tx {
+            background: ${status.toLowerCase() === 'connected' ? '#284f30' : '#5a1d1d'};
+          }
+
+          .mcs-knob {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background:
+              radial-gradient(circle at 38% 32%, #7a7d7f 0 5px, transparent 6px),
+              radial-gradient(circle, #4a4e50 0 38%, #1d2022 40% 67%, #070707 69%);
+            border: 2px solid #060606;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,.2);
+          }
+
+          .mcs-port {
+            width: 40px;
+            height: 30px;
+            border-radius: 5px;
+            background: #050606;
+            border: 3px solid #313539;
+            box-shadow: inset 0 0 0 3px #111;
+          }
+
+          .mcs-pill {
+            min-width: 42px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: linear-gradient(#f6f6f6, #aeb0b1);
+            color: #1b1d1f;
+            font-size: 9px;
+            font-weight: 800;
+            line-height: 1;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 1px 2px #000;
+          }
+
+          .mcs-center {
+            min-width: 0;
+            display: grid;
+            grid-template-rows: 20px 86px 28px;
+            row-gap: 7px;
+          }
+
+          .mcs-brand-strip {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
-            height: 24px;
-            color: #d7d7d7;
-            font: 700 12px/1 Arial, sans-serif;
+            justify-content: space-between;
+            height: 20px;
+            padding: 0 8px;
+            box-sizing: border-box;
+            color: #cdd4d7;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1;
             letter-spacing: 0;
-            margin: 0 0 8px;
-            white-space: nowrap;
           }
 
-          .dmr-brand {
+          .mcs-brand-left {
             display: inline-flex;
             align-items: center;
             gap: 5px;
           }
 
-          .dmr-icons {
-            margin-left: auto;
+          .mcs-brand-icons {
             display: inline-flex;
-            align-items: center;
             gap: 6px;
-            color: #bfc7c9;
+            color: #b8c6c9;
           }
 
-          .dmr-lcd {
-            width: 348px;
-            max-width: 100%;
-            height: 164px;
-            margin: 0 auto;
-            padding: 10px 12px 8px;
+          .mcs-lcd-area {
+            display: grid;
+            grid-template-columns: 22px 1fr 22px;
+            gap: 7px;
+            align-items: center;
+          }
+
+          .mcs-arrow {
+            width: 0;
+            height: 0;
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+          }
+
+          .mcs-arrow.left {
+            border-right: 10px solid #d8d8d8;
+            justify-self: end;
+          }
+
+          .mcs-arrow.right {
+            border-left: 10px solid #d8d8d8;
+            justify-self: start;
+          }
+
+          .mcs-lcd {
+            height: 86px;
+            padding: 8px 12px 7px;
             box-sizing: border-box;
             overflow: hidden;
-            background: #8fa653;
-            border: 7px solid #070707;
-            border-radius: 3px;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
-            color: #10150d;
-            font-family: "Arial Narrow", Arial, sans-serif;
+            background:
+              linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 24%),
+              #9fc032;
+            border: 5px solid #080808;
+            border-radius: 11px;
+            box-shadow:
+              inset 0 0 0 1px rgba(0,0,0,.3),
+              inset 0 0 16px rgba(40,70,0,.35),
+              0 0 0 1px rgba(255,255,255,.16);
+            color: #18200d;
+            font-family: "Courier New", Consolas, monospace;
             letter-spacing: 0;
           }
 
-          .dmr-row {
+          .mcs-lcd-status {
             display: flex;
             align-items: center;
-            min-height: 24px;
-            line-height: 1.05;
-          }
-
-          .dmr-row + .dmr-row {
-            margin-top: 4px;
-          }
-
-          .dmr-callsign {
-            justify-content: center;
-            font-size: 34px;
-            font-weight: 900;
-            text-transform: uppercase;
-          }
-
-          .dmr-talkgroup {
-            justify-content: center;
-            font-size: 25px;
-            font-weight: 800;
-          }
-
-          .dmr-meta {
             justify-content: space-between;
-            font-size: 18px;
-            font-weight: 700;
+            height: 16px;
+            font-size: 13px;
+            font-weight: 900;
+            line-height: 1;
           }
 
-          .dmr-last-heard {
-            display: block;
-            margin-top: 6px;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.05;
+          .mcs-lcd-call {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 25px;
+            font-size: 25px;
+            font-weight: 900;
+            line-height: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
+
+          .mcs-lcd-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 19px;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .mcs-softkeys {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 7px;
+            align-items: center;
+          }
+
+          .mcs-softkey {
+            height: 22px;
+            border-radius: 14px;
+            background: linear-gradient(#f8f8f8, #afb2b4);
+            color: #1b1d1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 900;
+            line-height: 1;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 2px 3px rgba(0,0,0,.65);
+          }
+
+          .mcs-keypad {
+            display: grid;
+            grid-template-rows: 28px 1fr;
+            gap: 6px;
+          }
+
+          .mcs-badge {
+            height: 28px;
+            border-radius: 17px;
+            background: linear-gradient(#54575a, #202326);
+            border: 2px solid #090a0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f3f3f3;
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1;
+          }
+
+          .mcs-keys {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            align-content: start;
+          }
+
+          .mcs-key {
+            height: 22px;
+            border-radius: 14px;
+            background: linear-gradient(#fbfbfb, #bfc2c4);
+            color: #161819;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 2px 3px rgba(0,0,0,.68);
+          }
+
+          .mcs-key small {
+            font-size: 7px;
+            font-weight: 800;
+            margin-left: 1px;
+          }
+
+          ha-icon {
+            --mdc-icon-size: 14px;
+          }
+
+          @media (max-width: 780px) {
+            .mcs-wrap {
+              padding-bottom: 2px;
+            }
+          }
         </style>
 
-        <div class="dmr-shell">
-          <div class="dmr-badge-strip">
-            <span class="dmr-brand">
-              <ha-icon icon="mdi:home-assistant"></ha-icon>
-              <span>Home Assistant WPSD</span>
-            </span>
-            <span class="dmr-icons">
-              <ha-icon icon="mdi:radio-tower"></ha-icon>
-              <ha-icon icon="mdi:access-point"></ha-icon>
-              <ha-icon icon="mdi:thermometer"></ha-icon>
-            </span>
-          </div>
+        <div class="mcs-wrap">
+          <div class="mcs-radio">
+            <div class="mcs-top"></div>
+            <div class="mcs-face">
+              <div class="mcs-left">
+                <div class="mcs-leds">
+                  <span class="mcs-led rx"></span>
+                  <span class="mcs-led tx"></span>
+                </div>
+                <div class="mcs-knob"></div>
+                <span class="mcs-pill">Zone</span>
+                <div class="mcs-port"></div>
+                <span class="mcs-pill">Page</span>
+                <span></span>
+                <span class="mcs-pill">Opt</span>
+              </div>
 
-          <div class="dmr-lcd">
-            <div class="dmr-row dmr-callsign">${callsign}</div>
-            <div class="dmr-row dmr-talkgroup">${talkgroup}</div>
-            <div class="dmr-row dmr-meta">
-              <span>${mode}</span>
-              <span>${source}</span>
-              <span>${tempText}</span>
+              <div class="mcs-center">
+                <div class="mcs-brand-strip">
+                  <span class="mcs-brand-left">
+                    <ha-icon icon="mdi:home-assistant"></ha-icon>
+                    <span>Home Assistant WPSD</span>
+                  </span>
+                  <span class="mcs-brand-icons">
+                    <ha-icon icon="mdi:radio-tower"></ha-icon>
+                    <ha-icon icon="mdi:access-point"></ha-icon>
+                  </span>
+                </div>
+
+                <div class="mcs-lcd-area">
+                  <span class="mcs-arrow left"></span>
+                  <div class="mcs-lcd">
+                    <div class="mcs-lcd-status">
+                      <span>${mode}</span>
+                      <span>${source}</span>
+                      <span>${loss}</span>
+                    </div>
+                    <div class="mcs-lcd-call">${callsign}</div>
+                    <div class="mcs-lcd-info">${talkgroup} - ${displayLine}</div>
+                  </div>
+                  <span class="mcs-arrow right"></span>
+                </div>
+
+                <div class="mcs-softkeys">
+                  <span class="mcs-softkey">P1</span>
+                  <span class="mcs-softkey">P2</span>
+                  <span class="mcs-softkey">P3</span>
+                  <span class="mcs-softkey">HL</span>
+                  <span class="mcs-softkey">Phon</span>
+                  <span class="mcs-softkey">Scan</span>
+                  <span class="mcs-softkey">Call</span>
+                </div>
+              </div>
+
+              <div class="mcs-keypad">
+                <div class="mcs-badge">MCS2000 STYLE</div>
+                <div class="mcs-keys">
+                  <span class="mcs-key">1</span>
+                  <span class="mcs-key">2<small>ABC</small></span>
+                  <span class="mcs-key">3<small>DEF</small></span>
+                  <span class="mcs-key">4<small>GHI</small></span>
+                  <span class="mcs-key">5<small>JKL</small></span>
+                  <span class="mcs-key">6<small>MNO</small></span>
+                  <span class="mcs-key">7<small>PQRS</small></span>
+                  <span class="mcs-key">8<small>TUV</small></span>
+                  <span class="mcs-key">9<small>WXYZ</small></span>
+                  <span class="mcs-key">*</span>
+                  <span class="mcs-key">0</span>
+                  <span class="mcs-key">#</span>
+                </div>
+              </div>
             </div>
-            <span class="dmr-last-heard">${lastHeard}</span>
           </div>
         </div>
       `;
