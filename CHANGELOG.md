@@ -8,6 +8,9 @@
 - Updated dashboard examples to use the source sensor.
 - Added explicit fallback names for all sensors.
 - Redesigned the MCS2000-style dashboard example as a full radio front panel.
+- Improved the MCS2000-style dashboard example so it scales within narrow
+  dashboard columns instead of clipping.
+- Added a double-tap LCD colour invert toggle on the MCS2000 mic socket.
 
 ## 0.0.2 - 2026-05-22
 
