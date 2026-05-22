@@ -38,6 +38,7 @@
   yellow for Net/RX, and blue for standby.
 - Tuned the modern DMR radio example font sizing, screen height, and activity
   strip alignment.
+- Widened the modern DMR radio example while keeping the same height.
 - Updated the modern DMR radio example channel label to show the active
   talkgroup.
 
