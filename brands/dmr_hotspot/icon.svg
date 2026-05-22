@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">DMR Hotspot Icon</title>
+  <desc id="desc">A DMR hotspot radio display with signal arcs.</desc>
+  <defs>
+    <linearGradient id="bg" x1="92" y1="52" x2="420" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#29303a"/>
+      <stop offset="1" stop-color="#0b0f14"/>
+    </linearGradient>
+    <linearGradient id="lcd" x1="151" y1="192" x2="361" y2="306" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a9c76b"/>
+      <stop offset="1" stop-color="#6f8f3e"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="137" y1="111" x2="405" y2="386" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#32d7ee"/>
+      <stop offset="1" stop-color="#0799b9"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <path d="M116 196 256 84l140 112v214a20 20 0 0 1-20 20H136a20 20 0 0 1-20-20Z" fill="#131922" stroke="#43c9df" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M176 176h112a64 64 0 0 1 64 64v94a28 28 0 0 1-28 28H188a28 28 0 0 1-28-28V192a16 16 0 0 1 16-16Z" fill="#1e242c"/>
+  <rect x="184" y="204" width="168" height="102" rx="10" fill="url(#lcd)" stroke="#090d10" stroke-width="8"/>
+  <path d="M210 232h96M210 258h124M210 284h78" stroke="#14210f" stroke-width="13" stroke-linecap="round" opacity=".78"/>
+  <circle cx="216" cy="338" r="14" fill="#ffbf3c"/>
+  <circle cx="270" cy="338" r="14" fill="#32d7ee"/>
+  <circle cx="324" cy="338" r="14" fill="#8ecf54"/>
+  <path d="M372 157c29 29 45 67 45 108s-16 79-45 108M405 124c38 38 59 89 59 143s-21 105-59 143" fill="none" stroke="url(#cyan)" stroke-width="20" stroke-linecap="round"/>
+  <path d="M134 157c-29 29-45 67-45 108s16 79 45 108M101 124c-38 38-59 89-59 143s21 105 59 143" fill="none" stroke="url(#cyan)" stroke-width="20" stroke-linecap="round" opacity=".72"/>
+  <path d="M256 103v62" stroke="#32d7ee" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="256" cy="93" r="19" fill="#32d7ee"/>
+</svg>

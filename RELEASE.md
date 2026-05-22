@@ -1,9 +1,12 @@
-# Release Notes - v0.0.3
+# Release Notes - v0.0.4
 
-Third public release of DMR Hotspot for Home Assistant.
+Fourth public release of DMR Hotspot for Home Assistant.
 
 ## Highlights
 
+- Changes the default WPSD API polling interval from 30 seconds to 5 seconds.
+- Adds Home Assistant integration options for changing the scan interval.
+- Polishes the modern DMR/R7-style card BER/loss layout.
 - Adds mappings for real WPSD last-heard API output.
 - Adds source and loss sensors.
 - Maps `target` to talkgroup and `time_utc` to timestamp.

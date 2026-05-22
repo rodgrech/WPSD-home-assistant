@@ -17,6 +17,17 @@
       "already_configured": "This DMR hotspot is already configured."
     }
   },
+  "options": {
+    "step": {
+      "init": {
+        "title": "DMR Hotspot options",
+        "description": "Adjust how often Home Assistant polls the WPSD API.",
+        "data": {
+          "scan_interval": "Scan interval"
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "status": {

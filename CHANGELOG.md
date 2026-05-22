@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.4 - 2026-05-23
+
+- Changed the default polling interval from 30 seconds to 5 seconds.
+- Added an integration options flow so the polling interval can be changed from
+  Home Assistant without re-adding the integration.
+- Added brand-style icon assets and fallback icon metadata for HACS/Home
+  Assistant presentation.
+- Split BER and loss into a two-column metric row on the modern DMR radio
+  example.
+
 ## 0.0.3 - 2026-05-22
 
 - Added mappings for real WPSD API keys including `target`, `src`, `time_utc`,
@@ -39,6 +49,8 @@
 - Tuned the modern DMR radio example font sizing, screen height, and activity
   strip alignment.
 - Widened the modern DMR radio example while keeping the same height.
+- Split BER and loss into a two-column metric row on the modern DMR radio
+  example.
 - Updated the modern DMR radio example channel label to show the active
   talkgroup.
 

@@ -17,7 +17,7 @@ from .const import CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN
 class DmrHotspotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for DMR Hotspot."""
 
-    VERSION = 1
+    VERSION = 2
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -58,4 +58,41 @@ class DmrHotspotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 }
             ),
             errors=errors,
+        )
+
+    @staticmethod
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry,
+    ) -> DmrHotspotOptionsFlow:
+        """Create the options flow."""
+        return DmrHotspotOptionsFlow(config_entry)
+
+
+class DmrHotspotOptionsFlow(config_entries.OptionsFlow):
+    """Handle options for DMR Hotspot."""
+
+    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
+        """Initialize the options flow."""
+        self._config_entry = config_entry
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> config_entries.FlowResult:
+        """Manage integration options."""
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        current_scan_interval = self._config_entry.options.get(
+            CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
+        )
+
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Optional(
+                        CONF_SCAN_INTERVAL, default=current_scan_interval
+                    ): vol.All(vol.Coerce(int), vol.Range(min=5, max=3600)),
+                }
+            ),
         )

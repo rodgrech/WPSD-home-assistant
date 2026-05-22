@@ -5,7 +5,7 @@
 A custom Home Assistant integration for monitoring a DMR hotspot such as WPSD,
 Pi-Star, or an MMDVMHost-based gateway.
 
-Version: `0.0.3`
+Version: `0.0.4`
 
 ## Features
 
@@ -30,12 +30,14 @@ Branding assets are included in:
 
 ```text
 assets/
+brands/dmr_hotspot/icon.svg
 custom_components/dmr_hotspot/icon.png
 custom_components/dmr_hotspot/logo.png
 ```
 
-These are ready for the next revision and for future Home Assistant Brands
-submission work.
+These are ready for GitHub/HACS presentation and future Home Assistant Brands
+submission work. Home Assistant may still require a formal Brands repository
+submission before the integration logo appears consistently in all HA UI areas.
 
 ## Installation
 
@@ -73,6 +75,9 @@ http://<hotspot-hostname-or-ip>/api/?limit=10&names=true&country=true
 
 No changes are required on the hotspot Linux installation.
 
+The default polling interval is `5` seconds. You can change this from the
+integration options in Home Assistant.
+
 ## Current Status
 
 This integration currently provides the release-ready Home Assistant structure
@@ -81,7 +86,7 @@ confirm the exact JSON shape returned by your hotspot.
 
 ## Release
 
-Latest tagged release: `v0.0.3`
+Latest tagged release: `v0.0.4`
 
 The GitHub repository is:
 
@@ -95,6 +100,8 @@ See [CHANGELOG.md](CHANGELOG.md) for the full release history.
 
 Recent changes:
 
+- `0.0.4`: faster default polling, configurable scan interval options, and
+  modern card BER/loss layout polish.
 - `0.0.3`: mapped real WPSD API fields, added source/loss sensors, and added
   explicit fallback names for all sensors.
 - `0.0.2`: added branding assets, fixed sensor values showing as unknown, and

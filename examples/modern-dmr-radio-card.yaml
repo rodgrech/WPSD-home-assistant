@@ -49,7 +49,6 @@ custom_fields:
       const timeText = timestamp && timestamp.length >= 16 ? timestamp.slice(11, 16) : '19:29';
       const channel = talkgroup.replace('TG ', '');
       const berText = ber && ber !== 'unknown' && ber !== 'unavailable' ? ber : '--';
-      const zoneLine = `BER ${berText} / Loss ${loss}`;
       const activity = source.toLowerCase() === 'rf' ? 'tx' : source.toLowerCase() === 'net' ? 'rx' : 'standby';
 
       return `
@@ -187,15 +186,45 @@ custom_fields:
             box-sizing: border-box;
           }
 
-          .r7-zone {
+          .r7-metrics {
             min-width: 0;
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            align-items: center;
             color: #355264;
+          }
+
+          .r7-metric {
+            min-width: 0;
+            display: grid;
+            grid-template-rows: 15px 12px;
+            align-items: center;
+            justify-items: center;
+          }
+
+          .r7-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(92, 120, 133, .48);
+          }
+
+          .r7-metric-value {
+            max-width: 100%;
+            color: #1f2f38;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 900;
             line-height: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+          }
+
+          .r7-metric-label {
+            color: #617582;
+            font-size: 9px;
+            font-weight: 800;
+            line-height: 1;
+            text-transform: uppercase;
           }
 
           .r7-channel {
@@ -271,7 +300,17 @@ custom_fields:
                 <div class="r7-card">
                   <div class="r7-activity"></div>
                   <div class="r7-lines">
-                    <div class="r7-zone">${zoneLine}</div>
+                    <div class="r7-metrics">
+                      <div class="r7-metric">
+                        <span class="r7-metric-value">${berText}</span>
+                        <span class="r7-metric-label">BER</span>
+                      </div>
+                      <span class="r7-divider"></span>
+                      <div class="r7-metric">
+                        <span class="r7-metric-value">${loss}</span>
+                        <span class="r7-metric-label">LOSS</span>
+                      </div>
+                    </div>
                     <div class="r7-channel">${channel}</div>
                     <div class="r7-caller">${caller}</div>
                   </div>
