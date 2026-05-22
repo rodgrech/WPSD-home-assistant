@@ -48,38 +48,27 @@ custom_fields:
         <style>
           .mcs-wrap {
             width: 100%;
-            container-type: inline-size;
-            height: calc(174px * min(.84, calc(100cqw / 720)));
-            position: relative;
+            min-width: 0;
             box-sizing: border-box;
             overflow: hidden;
           }
 
           .mcs-radio {
-            width: 720px;
-            height: 174px;
+            width: 100%;
+            min-width: 0;
+            height: 144px;
             margin: 0 auto;
-            position: relative;
             box-sizing: border-box;
             color: #f1f1f1;
             font-family: Arial, Helvetica, sans-serif;
-            position: absolute;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%) scale(min(.84, calc(100cqw / 720)));
-            transform-origin: top center;
           }
 
           .mcs-face {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 160px;
+            height: 138px;
             display: grid;
-            grid-template-columns: 112px 1fr 156px;
-            gap: 10px;
-            padding: 11px 12px;
+            grid-template-columns: minmax(58px, 82px) minmax(0, 1fr) minmax(70px, 102px);
+            gap: 6px;
+            padding: 8px;
             box-sizing: border-box;
             background: linear-gradient(#2b2d2f, #121416);
             border: 3px solid #050505;
@@ -93,24 +82,24 @@ custom_fields:
           .mcs-left {
             position: relative;
             display: grid;
-            grid-template-columns: 42px 46px;
-            grid-template-rows: 20px 34px 34px 34px;
-            column-gap: 8px;
-            row-gap: 6px;
+            grid-template-columns: 28px minmax(30px, 42px);
+            grid-template-rows: 14px 28px 28px 28px;
+            column-gap: 5px;
+            row-gap: 4px;
             align-items: center;
           }
 
           .mcs-leds {
             grid-column: 1 / 3;
             display: flex;
-            gap: 10px;
+            gap: 7px;
             align-items: center;
-            padding-left: 4px;
+            padding-left: 3px;
           }
 
           .mcs-led {
-            width: 30px;
-            height: 7px;
+            width: 22px;
+            height: 5px;
             border-radius: 6px;
             background: #272d27;
             box-shadow: inset 0 1px 2px #000;
@@ -126,8 +115,8 @@ custom_fields:
           }
 
           .mcs-knob {
-            width: 42px;
-            height: 42px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background:
               radial-gradient(circle at 38% 32%, #7a7d7f 0 5px, transparent 6px),
@@ -137,8 +126,8 @@ custom_fields:
           }
 
           .mcs-port {
-            width: 40px;
-            height: 30px;
+            width: 30px;
+            height: 24px;
             border-radius: 5px;
             background: #050606;
             border: 3px solid #313539;
@@ -147,15 +136,15 @@ custom_fields:
           }
 
           .mcs-pill {
-            min-width: 42px;
-            height: 22px;
+            min-width: 32px;
+            height: 18px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             border-radius: 14px;
             background: linear-gradient(#f6f6f6, #aeb0b1);
             color: #1b1d1f;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
             line-height: 1;
             box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 1px 2px #000;
@@ -164,19 +153,19 @@ custom_fields:
           .mcs-center {
             min-width: 0;
             display: grid;
-            grid-template-rows: 20px 86px 28px;
-            row-gap: 7px;
+            grid-template-rows: 16px 72px 22px;
+            row-gap: 5px;
           }
 
           .mcs-brand-strip {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 20px;
-            padding: 0 8px;
+            height: 16px;
+            padding: 0 5px;
             box-sizing: border-box;
             color: #cdd4d7;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 800;
             line-height: 1;
             letter-spacing: 0;
@@ -185,22 +174,26 @@ custom_fields:
           .mcs-brand-left {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            height: 16px;
+            gap: 3px;
+            height: 14px;
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
 
           .mcs-brand-icons {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            height: 16px;
+            gap: 4px;
+            height: 14px;
             color: #b8c6c9;
           }
 
           .mcs-lcd-area {
             display: grid;
-            grid-template-columns: 22px 1fr 22px;
-            gap: 7px;
+            grid-template-columns: 12px 1fr 12px;
+            gap: 4px;
             align-items: center;
           }
 
@@ -212,25 +205,25 @@ custom_fields:
           }
 
           .mcs-arrow.left {
-            border-right: 10px solid #d8d8d8;
+            border-right: 8px solid #d8d8d8;
             justify-self: end;
           }
 
           .mcs-arrow.right {
-            border-left: 10px solid #d8d8d8;
+            border-left: 8px solid #d8d8d8;
             justify-self: start;
           }
 
           .mcs-lcd {
-            height: 86px;
-            padding: 8px 12px 7px;
+            height: 72px;
+            padding: 6px 8px 5px;
             box-sizing: border-box;
             overflow: hidden;
             background:
               linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 24%),
               #9fc032;
-            border: 5px solid #080808;
-            border-radius: 11px;
+            border: 4px solid #080808;
+            border-radius: 8px;
             box-shadow:
               inset 0 0 0 1px rgba(0,0,0,.3),
               inset 0 0 16px rgba(40,70,0,.35),
@@ -255,8 +248,8 @@ custom_fields:
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 16px;
-            font-size: 13px;
+            height: 13px;
+            font-size: 10px;
             font-weight: 900;
             line-height: 1;
           }
@@ -265,8 +258,8 @@ custom_fields:
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 25px;
-            font-size: 25px;
+            height: 22px;
+            font-size: clamp(15px, 4.6vw, 22px);
             font-weight: 900;
             line-height: 1;
             white-space: nowrap;
@@ -278,8 +271,8 @@ custom_fields:
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 19px;
-            font-size: 15px;
+            height: 16px;
+            font-size: clamp(9px, 2.7vw, 13px);
             font-weight: 900;
             line-height: 1;
             white-space: nowrap;
@@ -290,19 +283,19 @@ custom_fields:
           .mcs-softkeys {
             display: grid;
             grid-template-columns: repeat(7, minmax(0, 1fr));
-            gap: 7px;
+            gap: 4px;
             align-items: center;
           }
 
           .mcs-softkey {
-            height: 22px;
+            height: 18px;
             border-radius: 14px;
             background: linear-gradient(#f8f8f8, #afb2b4);
             color: #1b1d1f;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 900;
             line-height: 1;
             box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 2px 3px rgba(0,0,0,.65);
@@ -310,12 +303,12 @@ custom_fields:
 
           .mcs-keypad {
             display: grid;
-            grid-template-rows: 28px 1fr;
-            gap: 6px;
+            grid-template-rows: 22px 1fr;
+            gap: 5px;
           }
 
           .mcs-badge {
-            height: 28px;
+            height: 22px;
             border-radius: 17px;
             background: linear-gradient(#54575a, #202326);
             border: 2px solid #090a0b;
@@ -323,7 +316,7 @@ custom_fields:
             align-items: center;
             justify-content: center;
             color: #f3f3f3;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 900;
             line-height: 1;
           }
@@ -331,58 +324,78 @@ custom_fields:
           .mcs-keys {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            gap: 4px;
             align-content: start;
           }
 
           .mcs-key {
-            height: 22px;
+            height: 18px;
             border-radius: 14px;
             background: linear-gradient(#fbfbfb, #bfc2c4);
             color: #161819;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 900;
             line-height: 1;
             box-shadow: inset 0 1px 1px rgba(255,255,255,.9), 0 2px 3px rgba(0,0,0,.68);
           }
 
           .mcs-key small {
-            font-size: 7px;
+            display: none;
+            font-size: 6px;
             font-weight: 800;
             margin-left: 1px;
           }
 
           ha-icon {
-            --mdc-icon-size: 14px;
-            width: 14px;
-            height: 14px;
+            --mdc-icon-size: 11px;
+            width: 11px;
+            height: 11px;
             display: inline-flex;
-            flex: 0 0 14px;
+            flex: 0 0 11px;
             align-items: center;
             justify-content: center;
             line-height: 1;
           }
 
-          @supports not (container-type: inline-size) {
-            .mcs-wrap {
-              height: 126px;
-            }
-
+          @media (min-width: 520px) {
             .mcs-radio {
-              transform: translateX(-50%) scale(.72);
-            }
-          }
-
-          @media (max-width: 360px) {
-            .mcs-radio {
-              transform: translateX(-50%) scale(.42);
+              height: 166px;
             }
 
-            .mcs-wrap {
-              height: 74px;
+            .mcs-face {
+              height: 160px;
+              grid-template-columns: 96px minmax(0, 1fr) 132px;
+              gap: 8px;
+              padding: 10px;
+            }
+
+            .mcs-center {
+              grid-template-rows: 18px 84px 24px;
+              row-gap: 6px;
+            }
+
+            .mcs-lcd {
+              height: 84px;
+            }
+
+            .mcs-lcd-status {
+              height: 15px;
+              font-size: 12px;
+            }
+
+            .mcs-lcd-call {
+              height: 25px;
+            }
+
+            .mcs-lcd-info {
+              height: 18px;
+            }
+
+            .mcs-key small {
+              display: inline;
             }
           }
         </style>

@@ -24,6 +24,8 @@
 - Updated the MCS2000-style dashboard badge text to `MCS2000`.
 - Improved responsive scaling and narrow-card text spacing for the dashboard
   card examples.
+- Reworked the MCS2000-style dashboard example to use native responsive columns
+  instead of transform scaling, reducing horizontal clipping.
 
 ## 0.0.2 - 2026-05-22
 
