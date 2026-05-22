@@ -19,6 +19,9 @@
   button-card layouts.
 - Increased the MCS2000-style dashboard example size so it renders as a readable
   control head rather than a tiny thumbnail.
+- Added explicit icon dimensions and section grid sizing options to the
+  dashboard card examples.
+- Updated the MCS2000-style dashboard badge text to `MCS2000`.
 
 ## 0.0.2 - 2026-05-22
 

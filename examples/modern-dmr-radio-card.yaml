@@ -7,6 +7,10 @@ type: custom:button-card
 entity: sensor.dmr_hotspot_status
 show_name: false
 show_state: false
+show_icon: false
+grid_options:
+  columns: 6
+  rows: 4
 tap_action:
   action: more-info
 styles:
@@ -22,6 +26,8 @@ styles:
   custom_fields:
     radio:
       - width: 100%
+      - display: block
+      - line-height: 0
 custom_fields:
   radio: |
     [[[
@@ -77,6 +83,7 @@ custom_fields:
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            height: 18px;
           }
 
           .dmr-modern-body {
@@ -160,6 +167,13 @@ custom_fields:
 
           ha-icon {
             --mdc-icon-size: 15px;
+            width: 15px;
+            height: 15px;
+            display: inline-flex;
+            flex: 0 0 15px;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
           }
         </style>
 
