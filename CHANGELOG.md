@@ -17,6 +17,8 @@
   reliable in narrow dashboard layouts.
 - Forced the MCS2000-style dashboard example to render its custom field in
   button-card layouts.
+- Increased the MCS2000-style dashboard example size so it renders as a readable
+  control head rather than a tiny thumbnail.
 
 ## 0.0.2 - 2026-05-22
 

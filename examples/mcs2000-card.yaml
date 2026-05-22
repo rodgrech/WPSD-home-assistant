@@ -12,7 +12,7 @@ tap_action:
   action: more-info
 styles:
   card:
-    - width: 390px
+    - width: 640px
     - max-width: 100%
     - margin: 0 auto
     - padding: 10px
@@ -45,7 +45,7 @@ custom_fields:
         <style>
           .mcs-wrap {
             width: 100%;
-            height: 174px;
+            height: 146px;
             position: relative;
             box-sizing: border-box;
             overflow: hidden;
@@ -62,7 +62,7 @@ custom_fields:
             position: absolute;
             left: 50%;
             top: 0;
-            transform: translateX(-50%) scale(.52);
+            transform: translateX(-50%) scale(.84);
             transform-origin: top center;
           }
 
@@ -352,13 +352,23 @@ custom_fields:
             --mdc-icon-size: 14px;
           }
 
-          @media (max-width: 430px) {
+          @media (max-width: 680px) {
             .mcs-radio {
-              transform: translateX(-50%) scale(.46);
+              transform: translateX(-50%) scale(.72);
             }
 
             .mcs-wrap {
-              height: 154px;
+              height: 126px;
+            }
+          }
+
+          @media (max-width: 520px) {
+            .mcs-radio {
+              transform: translateX(-50%) scale(.52);
+            }
+
+            .mcs-wrap {
+              height: 92px;
             }
           }
         </style>
