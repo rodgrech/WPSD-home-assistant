@@ -39,7 +39,7 @@ custom_fields:
           .mcs-wrap {
             width: 100%;
             container-type: inline-size;
-            height: calc(214px * min(1, calc(100cqw / 720)));
+            height: calc(174px * min(1, calc(100cqw / 720)));
             position: relative;
             box-sizing: border-box;
             overflow: hidden;
@@ -48,7 +48,7 @@ custom_fields:
           .mcs-radio {
             --mcs-scale: min(1, calc(100cqw / 720));
             width: 720px;
-            height: 214px;
+            height: 174px;
             margin: 0 auto;
             position: relative;
             box-sizing: border-box;
@@ -61,23 +61,11 @@ custom_fields:
             transform-origin: top center;
           }
 
-          .mcs-top {
-            position: absolute;
-            left: 80px;
-            right: 92px;
-            top: 0;
-            height: 54px;
-            background: linear-gradient(#777, #4e4e4e);
-            border-radius: 8px 8px 2px 2px;
-            clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
-            box-shadow: inset 0 2px 0 rgba(255,255,255,.22);
-          }
-
           .mcs-face {
             position: absolute;
             left: 0;
             right: 0;
-            top: 48px;
+            top: 0;
             height: 160px;
             display: grid;
             grid-template-columns: 112px 1fr 156px;
@@ -86,7 +74,7 @@ custom_fields:
             box-sizing: border-box;
             background: linear-gradient(#2b2d2f, #121416);
             border: 3px solid #050505;
-            border-radius: 28px 10px 18px 18px;
+            border-radius: 28px 14px 18px 18px;
             box-shadow:
               inset 0 2px 0 rgba(255,255,255,.24),
               inset 0 -5px 0 rgba(0,0,0,.38),
@@ -375,7 +363,6 @@ custom_fields:
 
         <div class="mcs-wrap">
           <div class="mcs-radio">
-            <div class="mcs-top"></div>
             <div class="mcs-face">
               <div class="mcs-left">
                 <div class="mcs-leds">

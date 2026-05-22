@@ -11,6 +11,8 @@
 - Improved the MCS2000-style dashboard example so it scales within narrow
   dashboard columns instead of clipping.
 - Added a double-tap LCD colour invert toggle on the MCS2000 mic socket.
+- Removed the rear chassis from the MCS2000-style dashboard example so only the
+  control head is shown.
 
 ## 0.0.2 - 2026-05-22
 
