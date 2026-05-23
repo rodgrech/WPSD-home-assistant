@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Any
 
 from aiohttp import ClientError, ClientSession
@@ -105,7 +106,7 @@ class DmrHotspotClient:
             duration=_first_str(latest, "duration", "dur"),
             ber=_as_float(_first_value(latest, "ber", "BER")),
             loss=_first_str(latest, "loss", "packet_loss"),
-            temperature=_as_float(_first_value(latest, "temperature", "temp")),
+            temperature=_temperature_from(raw, latest),
             raw=raw,
         )
 
@@ -174,4 +175,31 @@ def _as_float(value: Any) -> float | None:
     try:
         return float(value)
     except (TypeError, ValueError):
-        return None
+        match = re.search(r"-?\d+(?:\.\d+)?", str(value))
+        return float(match.group(0)) if match else None
+
+
+def _temperature_from(raw: Any, latest: dict[str, Any]) -> float | None:
+    """Return Raspberry Pi / hotspot temperature from common WPSD keys."""
+    keys = (
+        "temperature",
+        "temp",
+        "cpu_temp",
+        "cputemp",
+        "cpuTemp",
+        "cpu_temperature",
+        "pi_temp",
+        "rpi_temp",
+        "raspi_temp",
+        "raspberry_pi_temp",
+        "system_temp",
+    )
+
+    latest_temp = _as_float(_first_value(latest, *keys))
+    if latest_temp is not None:
+        return latest_temp
+
+    if isinstance(raw, dict):
+        return _as_float(_first_value(raw, *keys))
+
+    return None

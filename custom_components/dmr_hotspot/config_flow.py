@@ -11,7 +11,7 @@ from homeassistant.const import CONF_URL
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import DmrHotspotClient, DmrHotspotClientError
-from .const import CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN
+from .const import CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN, MIN_SCAN_INTERVAL
 
 
 class DmrHotspotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -54,7 +54,7 @@ class DmrHotspotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_URL): str,
                     vol.Optional(
                         CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
-                    ): vol.All(vol.Coerce(int), vol.Range(min=5, max=3600)),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL, max=3600)),
                 }
             ),
             errors=errors,
@@ -92,7 +92,7 @@ class DmrHotspotOptionsFlow(config_entries.OptionsFlow):
                 {
                     vol.Optional(
                         CONF_SCAN_INTERVAL, default=current_scan_interval
-                    ): vol.All(vol.Coerce(int), vol.Range(min=5, max=3600)),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=MIN_SCAN_INTERVAL, max=3600)),
                 }
             ),
         )

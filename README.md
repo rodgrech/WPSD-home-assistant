@@ -5,7 +5,7 @@
 A custom Home Assistant integration for monitoring a DMR hotspot such as WPSD,
 Pi-Star, or an MMDVMHost-based gateway.
 
-Version: `0.0.6`
+Version: `0.0.7`
 
 ## Features
 
@@ -28,10 +28,14 @@ Supported WPSD last-heard fields include `time_utc`, `mode`, `callsign`,
 Branding assets are included in:
 
 ```text
+brand/icon.png
+brand/logo.png
 assets/
 brands/dmr_hotspot/icon.svg
 brands/dmr_hotspot/icon.png
 brands/dmr_hotspot/logo.png
+custom_components/dmr_hotspot/brand/icon.png
+custom_components/dmr_hotspot/brand/logo.png
 custom_components/dmr_hotspot/icon.png
 custom_components/dmr_hotspot/logo.png
 ```
@@ -77,7 +81,8 @@ http://<hotspot-hostname-or-ip>/api/?limit=10&names=true&country=true
 No changes are required on the hotspot Linux installation.
 
 The default polling interval is `5` seconds. You can change this from the
-integration options in Home Assistant.
+integration options in Home Assistant. The minimum supported interval is `2`
+seconds.
 
 ## Current Status
 
@@ -87,7 +92,7 @@ confirm the exact JSON shape returned by your hotspot.
 
 ## Release
 
-Latest tagged release: `v0.0.6`
+Latest tagged release: `v0.0.7`
 
 The GitHub repository is:
 
@@ -101,6 +106,9 @@ See [CHANGELOG.md](CHANGELOG.md) for the full release history.
 
 Recent changes:
 
+- `0.0.7`: added local Home Assistant/HACS brand folders, added fallback MDI
+  sensor icons, lowered the minimum polling interval to 2 seconds, and mapped
+  Raspberry Pi/WPSD CPU temperature keys.
 - `0.0.6`: updated device metadata and bundled PNG brand assets to improve
   Home Assistant icon/logo display.
 - `0.0.5`: documented the standalone WPSD Status Card Mod dashboard card and

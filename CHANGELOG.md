@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.7 - 2026-05-23
+
+- Added local Home Assistant brand assets under
+  `custom_components/dmr_hotspot/brand`.
+- Added HACS repository brand assets under `brand`.
+- Added fallback MDI icons for DMR hotspot sensors.
+- Lowered the scan interval minimum from 5 seconds to 2 seconds.
+- Expanded temperature parsing to support common Raspberry Pi/WPSD CPU
+  temperature keys and values with units.
+- Bumped the integration manifest version to `0.0.7`.
+
 ## 0.0.6 - 2026-05-23
 
 - Changed the Home Assistant device manufacturer from `MMDVM` to
