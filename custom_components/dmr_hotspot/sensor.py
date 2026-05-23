@@ -156,7 +156,8 @@ class DmrHotspotSensor(CoordinatorEntity[DmrHotspotData], SensorEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": "DMR Hotspot",
-            "manufacturer": "MMDVM",
+            "manufacturer": "DMR Hotspot",
+            "model": "WPSD / MMDVM Hotspot",
         }
 
     @property

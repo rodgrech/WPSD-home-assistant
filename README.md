@@ -5,7 +5,7 @@
 A custom Home Assistant integration for monitoring a DMR hotspot such as WPSD,
 Pi-Star, or an MMDVMHost-based gateway.
 
-Version: `0.0.5`
+Version: `0.0.6`
 
 ## Features
 
@@ -30,6 +30,8 @@ Branding assets are included in:
 ```text
 assets/
 brands/dmr_hotspot/icon.svg
+brands/dmr_hotspot/icon.png
+brands/dmr_hotspot/logo.png
 custom_components/dmr_hotspot/icon.png
 custom_components/dmr_hotspot/logo.png
 ```
@@ -85,7 +87,7 @@ confirm the exact JSON shape returned by your hotspot.
 
 ## Release
 
-Latest tagged release: `v0.0.5`
+Latest tagged release: `v0.0.6`
 
 The GitHub repository is:
 
@@ -99,6 +101,8 @@ See [CHANGELOG.md](CHANGELOG.md) for the full release history.
 
 Recent changes:
 
+- `0.0.6`: updated device metadata and bundled PNG brand assets to improve
+  Home Assistant icon/logo display.
 - `0.0.5`: documented the standalone WPSD Status Card Mod dashboard card and
   current R7 YAML example.
 - `0.0.4`: faster default polling, configurable scan interval options, and

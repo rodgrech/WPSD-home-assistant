@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.6 - 2026-05-23
+
+- Changed the Home Assistant device manufacturer from `MMDVM` to
+  `DMR Hotspot` so the device page no longer requests a missing MMDVM logo.
+- Added PNG brand assets under `brands/dmr_hotspot`.
+- Bumped the integration manifest version to `0.0.6`.
+
 ## 0.0.5 - 2026-05-23
 
 - Updated the README to recommend the standalone
