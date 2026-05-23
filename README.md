@@ -5,7 +5,7 @@
 A custom Home Assistant integration for monitoring a DMR hotspot such as WPSD,
 Pi-Star, or an MMDVMHost-based gateway.
 
-Version: `0.0.4`
+Version: `0.0.5`
 
 ## Features
 
@@ -13,8 +13,7 @@ Version: `0.0.4`
 - Periodic polling through Home Assistant's data update coordinator
 - Device and diagnostic sensors for hotspot status
 - Designed for the WPSD last-heard API
-- Example MCS2000-style Lovelace card layout
-- Example modern DMR radio LCD Lovelace card layout
+- Companion HACS dashboard card with MCS2000 and R7-inspired styles
 - HACS-ready repository layout
 
 Supported WPSD last-heard fields include `time_utc`, `mode`, `callsign`,
@@ -86,7 +85,7 @@ confirm the exact JSON shape returned by your hotspot.
 
 ## Release
 
-Latest tagged release: `v0.0.4`
+Latest tagged release: `v0.0.5`
 
 The GitHub repository is:
 
@@ -100,6 +99,8 @@ See [CHANGELOG.md](CHANGELOG.md) for the full release history.
 
 Recent changes:
 
+- `0.0.5`: documented the standalone WPSD Status Card Mod dashboard card and
+  current R7 YAML example.
 - `0.0.4`: faster default polling, configurable scan interval options, and
   modern card BER/loss layout polish.
 - `0.0.3`: mapped real WPSD API fields, added source/loss sensors, and added
@@ -110,7 +111,47 @@ Recent changes:
 
 ## Dashboard Card
 
-Dashboard examples are included at:
+The polished dashboard card now lives in its own HACS dashboard repository:
+
+[WPSD Status Card Mod](https://github.com/rodgrech/WPSD-Status-Card-Mod)
+
+Install it in HACS as a custom repository using category:
+
+```text
+Dashboard
+```
+
+The card supports:
+
+- `style: mcs2000`
+- `style: r7`
+
+HACS resource path:
+
+```text
+/hacsfiles/WPSD-Status-Card-Mod/wpsd-radio-card.js
+```
+
+Example R7 card:
+
+```yaml
+type: custom:wpsd-radio-card
+style: r7
+callsign_entity: sensor.dmr_hotspot_callsign
+talkgroup_entity: sensor.dmr_hotspot_talkgroup
+mode_entity: sensor.dmr_hotspot_mode
+source_entity: sensor.dmr_hotspot_source
+loss_entity: sensor.dmr_hotspot_loss
+ber_entity: sensor.dmr_hotspot_ber
+name_entity: sensor.dmr_hotspot_name
+country_entity: sensor.dmr_hotspot_country
+channel_names:
+  "91": Worldwide
+timestamp_entity: sensor.dmr_hotspot_timestamp
+status_entity: sensor.dmr_hotspot_status
+```
+
+Legacy YAML-only dashboard examples are still included at:
 
 ```text
 examples/mcs2000-card.yaml
@@ -118,66 +159,6 @@ examples/modern-dmr-radio-card.yaml
 examples/wpsd-radio-card-mcs2000.yaml
 examples/wpsd-radio-card-r7.yaml
 ```
-
-The MCS2000 example keeps the green LCD area at a fixed size, uses Home
-Assistant MDI icons, keeps the WPSD/Home Assistant branding compact, and avoids
-the changing background size issue from the earlier mockups.
-
-The modern DMR radio example uses a compact colour LCD style similar to current
-handheld/mobile DMR radios, with status icons, channel/talkgroup focus, and a
-more polished contemporary display.
-
-## Custom Radio Card
-
-An experimental standalone Lovelace card is included at:
-
-```text
-www/wpsd-radio-card.js
-```
-
-To use it manually, copy the file into Home Assistant under:
-
-```text
-/config/www/wpsd-radio-card.js
-```
-
-Then add it as a Lovelace resource:
-
-```text
-/local/wpsd-radio-card.js
-```
-
-MCS2000 style:
-
-```yaml
-type: custom:wpsd-radio-card
-style: mcs2000
-title: Home Assistant WPSD
-callsign_entity: sensor.dmr_hotspot_callsign
-talkgroup_entity: sensor.dmr_hotspot_talkgroup
-mode_entity: sensor.dmr_hotspot_mode
-source_entity: sensor.dmr_hotspot_source
-loss_entity: sensor.dmr_hotspot_loss
-last_heard_entity: sensor.dmr_hotspot_last_heard
-status_entity: sensor.dmr_hotspot_status
-```
-
-R7 style:
-
-```yaml
-type: custom:wpsd-radio-card
-style: r7
-callsign_entity: sensor.dmr_hotspot_callsign
-talkgroup_entity: sensor.dmr_hotspot_talkgroup
-source_entity: sensor.dmr_hotspot_source
-loss_entity: sensor.dmr_hotspot_loss
-ber_entity: sensor.dmr_hotspot_ber
-name_entity: sensor.dmr_hotspot_name
-timestamp_entity: sensor.dmr_hotspot_timestamp
-```
-
-For the MCS2000 style, double-click the right-hand `Menu` button to invert the
-LCD colours.
 
 ## Development
 

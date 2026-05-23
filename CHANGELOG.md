@@ -1,7 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.0.5 - 2026-05-23
 
+- Updated the README to recommend the standalone
+  `WPSD-Status-Card-Mod` HACS dashboard card.
+- Added the current R7 dashboard-card YAML example to the integration README.
 - Added an experimental standalone `custom:wpsd-radio-card` Lovelace card.
 - Added `style: mcs2000` and `style: r7` options to the JS card.
 - Added example YAML files for the JS-based MCS2000 and R7 card styles.
